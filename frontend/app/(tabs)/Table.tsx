@@ -1,14 +1,17 @@
-import { StyleSheet } from "react-native";
-
-import { Text, View } from "../../components/Themed";
-import { useState } from "react";
-import { TextInput } from "react-native-gesture-handler";
-import Column from "../../components/Column";
+import { FlatList, StyleSheet, View } from "react-native";
+import Table from "../../components/Table";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function TabOneScreen() {
-  const [inputValue, setInputValue] = useState("")
   return (
-    <Column></Column>
+    <View>
+      <ScrollView
+      horizontal
+      className="min-h-full"
+      >
+        <Table></Table>
+      </ScrollView>
+    </View>
   );
 }
 

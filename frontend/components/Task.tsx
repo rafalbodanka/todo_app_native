@@ -6,13 +6,14 @@ import Colors from "../constants/Colors";
 import { ExternalLink } from "./ExternalLink";
 import { MonoText } from "./StyledText";
 import { Text, View } from "./Themed";
+import { TaskType } from "../types/Types";
 
-export default function Task() {
-		const [taskTitle, setTaskTitle] = useState("")
+export default function Task({ task }: {task: TaskType}) {
+		const [taskTitle, setTaskTitle] = useState(task.title)
     const [isChecked, setIsChecked] = useState(false)
   return (
-    <View className="relative flex-max-w-8/12 w-8/12 border-white border-2 rounded-md">
-			<View className="p-4">
+    <View className="relative flex border-white border-2 rounded-md">
+			<View className="p-4 w-64">
 				<View className="flex flex-row items-center">
 					<BouncyCheckbox
 						size={25}
@@ -25,7 +26,7 @@ export default function Task() {
 						textComponent={<></>}
 						/>
 						<Text className={`pl-4 text-lg ${isChecked ? 'no-underline' : 'line-through text-gray-400'}`}
-							>Task title</Text>
+							>{taskTitle}</Text>
 				</View>
 			</View>
 			<View className="absolute w-4 bg-green-400 h-full right-0 top-0"/>
