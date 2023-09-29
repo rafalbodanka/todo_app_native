@@ -6,8 +6,12 @@ import {
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
-import { useEffect } from "react";
-import { useColorScheme } from "react-native";
+import { useEffect, useState } from "react";
+import { SafeAreaView, useColorScheme } from "react-native";
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
+import ModalHeader from "../components/ModalHeader";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -16,7 +20,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
+  initialRouteName: "index",
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -50,11 +54,38 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-      </Stack>
-    </ThemeProvider>
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="unauth" options={{
+              headerTitle: "Sign up",
+              headerTitleAlign: "center"
+            }} />
+            <Stack.Screen name="tables" options={{
+              headerTitle: "Tables",              
+              presentation: "modal",
+            }} />
+            <Stack.Screen name="add-task" options={{
+              headerTitle: "Add task",
+              presentation: "modal",
+            }} />
+            <Stack.Screen name="navigation" options={{
+              headerTitle: "Navigation",
+              presentation: "modal",
+            }} />
+            <Stack.Screen name="login" options={{
+              presentation: "modal",
+              headerTitle: "Log in"
+              }} />
+            <Stack.Screen name="signup" options={{
+              presentation: "modal",
+              headerTitle: "Create account"
+          }} />
+          </Stack>
+      </ThemeProvider>
+    </SafeAreaProvider>
+  </Provider>
   );
 }

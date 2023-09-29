@@ -1,27 +1,23 @@
-import React, { useEffect, useState } from "react";
-
-import exampleData from "../exampleData"
-
+import React from "react";
 import { StyleSheet } from "react-native";
-
-import Colors from "../constants/Colors";
-import { ExternalLink } from "./ExternalLink";
-import { MonoText } from "./StyledText";
 import { Text, View } from "./Themed";
 import Task from "./Task";
 import { ColumnType } from "../types/Types";
+import AddTaskButton from "./AddTaskButton";
+
 export default function Column({ column }: {column: ColumnType}) {
   return (
-    <View className="flex flex-col justify-center">
+    <View className="flex flex-col justify-center pt-4 pb-24">
       <View className="flex flex-row justify-center">
         <Text className="font-bold text-xl">{column?.title}</Text>
       </View>
         <View className="flex flex-row justify-center pt-4 pb-16">
                 <View className="flex">
+                <AddTaskButton></AddTaskButton>
                 {column.pendingTasks.length > 0 && <Text>Pending tasks</Text>}
                     {column.pendingTasks.map((task) => {
                         return (
-                            <View className="pt-4">
+                            <View key={task._id} className="pt-4">
                                 <Task task={task}></Task>
                             </View>
                         )
@@ -29,7 +25,7 @@ export default function Column({ column }: {column: ColumnType}) {
                     {column.showCompletedTasks && <Text className="pt-8">Completed tasks</Text>}
                     {column.completedTasks.map((task) => {
                         return (
-                            <View className="pt-4">
+                            <View key={task._id} className="pt-4">
                                 <Task task={task}></Task>
                             </View>
                         )

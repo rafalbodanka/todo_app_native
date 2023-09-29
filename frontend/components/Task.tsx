@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
-import Colors from "../constants/Colors";
-import { ExternalLink } from "./ExternalLink";
-import { MonoText } from "./StyledText";
 import { Text, View } from "./Themed";
 import { TaskType } from "../types/Types";
 
@@ -13,7 +10,7 @@ export default function Task({ task }: {task: TaskType}) {
     const [isChecked, setIsChecked] = useState(false)
   return (
     <View className="relative flex border-white border-2 rounded-md">
-			<View className="p-4 w-64">
+			<View className="w-64">
 				<View className="flex flex-row items-center">
 					<BouncyCheckbox
 						size={25}
@@ -24,12 +21,13 @@ export default function Task({ task }: {task: TaskType}) {
 						isChecked={isChecked}
 						onPress={(isChecked: boolean) => {setIsChecked(!isChecked)}}
 						textComponent={<></>}
+            className="p-4 pr-2"
 						/>
-						<Text className={`pl-4 text-lg ${isChecked ? 'no-underline' : 'line-through text-gray-400'}`}
+						<Text className={`pl-2 text-lg ${task.completed ? 'line-through text-gray-400' : 'no-underline'}`}
 							>{taskTitle}</Text>
 				</View>
 			</View>
-			<View className="absolute w-4 bg-green-400 h-full right-0 top-0"/>
+			<View className="absolute w-2 bg-green-400 h-full right-0 top-0"/>
     </View>
   );
 }
