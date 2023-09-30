@@ -7,12 +7,15 @@ import Ionicons from '@expo/vector-icons/Entypo';
 import { router, useNavigation } from 'expo-router';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAppDispatch } from '../redux/hooks';
+import { setIsLoggedIn } from '../redux/auth';
 
 export default function Login() {
 
     const [emailInputValue, setEmailInputValue] = useState("")
     const [passwordInputValue, setPasswordInputValue] = useState("")
     const [isPasswordVisible, setPasswordVisible] = useState(false);
+    const dispatch = useAppDispatch()
 
     const passwordInputRef = useRef(null)
     const handleChangePasswordVisibility = () => {
@@ -83,6 +86,7 @@ export default function Login() {
               { withCredentials: true }
             );
             if (response.status === 200) {
+            dispatch(setIsLoggedIn(true))
             const receivedCookie = response.headers['set-cookie']
             if (!receivedCookie) throw Error
             const [cookieName, cookieValue] = receivedCookie.toString().split(';')[0].split('=');
@@ -91,7 +95,7 @@ export default function Login() {
               } catch (e) {
                 console.log(e)
               }
-              router.replace('/')
+              router.back()
             }
         } catch (err) {
             console.log(err)

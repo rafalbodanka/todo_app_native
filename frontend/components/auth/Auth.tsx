@@ -24,7 +24,6 @@ const Auth: React.FC<AuthProps> = ({
       const cookie = await AsyncStorage.getItem("connect.sid")
       if (!cookie) {
         dispatch(setIsLoggedIn(false))
-        router.replace('/unauth')
       }
       try {
         const response = await axios.get(
@@ -43,7 +42,6 @@ const Auth: React.FC<AuthProps> = ({
         }
       } catch (err) {
         dispatch(setIsLoggedIn(false));
-        router.replace("/unauth")
       } finally {
         setIsLoading(false);
       }

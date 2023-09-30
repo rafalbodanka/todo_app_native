@@ -16,25 +16,28 @@ import Auth from "../components/auth/Auth";
 import useFetchUserData from "../components/hooks/useFetchUserData";
 import { Header } from "@rneui/themed";
 import { selectAuth } from "../redux/auth";
+import Unauth from "../components/Unauth";
 
 export default function index() {
 
     const currentTable = useAppSelector(selectCurrentTable)
     const isLoggedIn = useAppSelector(selectAuth)
     useFetchUserData()
-    console.log(isLoggedIn)
+
     return (
         <Auth>
-            {isLoggedIn &&
+            {isLoggedIn ?
                 <>
                 <Header backgroundColor="#171717"
+                containerStyle={{marginTop: 4, backgroundColor: "black"}}
+                barStyle="light-content"
                 rightComponent={
-                <Link className="text-white pl-8 pr-4 py-2" href="/navigation">
+                <Link className="text-white px-4 py-1 pt-2" href="/navigation">
                     <Icon name="user" size={24} color="#F2F2F2" />
                 </Link>
                 }
                 centerComponent={
-                    <Link className="text-white py-2" href="/tables">
+                    <Link className="text-white px-2 py-1 flex pt-2" href="/tables">
                     <Text className="text-lg text-white text-bold">{currentTable?.title}
                     </Text>
                 </Link>
@@ -51,6 +54,8 @@ export default function index() {
                         </View>
                     </View>
                 </>
+            :
+            <Unauth></Unauth>
             }
         </Auth>
     )

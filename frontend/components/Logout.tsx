@@ -23,7 +23,7 @@ const Logout = () => {
               });
             if (response.status === 200) {
                 dispatch(setIsLoggedIn(false))
-                router.push('/unauth')
+                router.back()
             }
         } catch (error) {
 

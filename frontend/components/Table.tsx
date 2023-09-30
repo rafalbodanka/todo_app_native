@@ -24,7 +24,7 @@ export default function Table() {
           <View className="flex flex-row justify-center gap-8">
               {table?.columns.map(column => {
                   return (
-                      <ScrollView showsVerticalScrollIndicator={false}
+                      <ScrollView key={column._id} showsVerticalScrollIndicator={false}
                       >
                           <Column column={column}></Column>
                       </ScrollView>
