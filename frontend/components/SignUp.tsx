@@ -5,6 +5,7 @@ import { Input } from '@rneui/themed';
 import Ionicons from '@expo/vector-icons/Entypo';
 import { TouchableHighlight } from 'react-native';
 import axios from 'axios';
+import { router } from 'expo-router';
 
 export default function SignUp() {
 
@@ -142,6 +143,8 @@ export default function SignUp() {
         <SafeAreaView>
             <View className="flex justify-center items-center w-full mt-20">
                 <View className="w-3/5">
+                  {!isRegisteredSuccesfully ? 
+                  <>
                     <Input placeholder='First name' inputStyle={{color: "white"}}
                     errorMessage={!isFirstNameValid ? invalidFirstNameMessage : ""} textContentType='name'
                     onChangeText={(val) => {
@@ -181,6 +184,14 @@ export default function SignUp() {
                         </View>
                     </View>
                     <Button title={"Sign up"} color={"#311B92"} onPress={handleRegister}></Button>
+                  </>
+                  :
+                  <View>
+                    <Text className='text-[#F2F2F2] text-center'>Account created succesfully.</Text>
+                    <Text className='text-[#F2F2F2] text-center my-4'>You can now log in.</Text>
+                    <Button title={"OK"} color={"#311B92"} onPress={()=> router.back()}></Button>
+                  </View>
+                  }
                 </View>
             </View>
         </SafeAreaView>
