@@ -1,68 +1,32 @@
 import { Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Platform } from "react-native"
-import { Text, View } from "../components/Themed";
+import { Platform } from "react-native"
+import { View } from "../components/Themed";
+import { Button } from "@rneui/themed";
 
 const Unauth = () => {
 
     return (
         <View className="flex w-full h-full justify-center items-center">
-            <View className="w-full">
-                <View>
-                    <View>
-                        <View
-                            style={styles.separator}
-                            lightColor="#eee"
-                            darkColor="rgba(255,255,255,0.1)"
-                        />
-                        <Link href="/login" className="w-full text-center py-8">
-                            <Text
-                            style={styles.title}
-                            className="text-center text-white"
-                            >Log in</Text>
+            <View className="flex justify-center flex-col gap-8">
+                <View className="w-1/2">
+                    <Button color={"#311B92"}>
+                        <Link href="/login"
+                        className="h-full w-full text-[#F2F2F2] uppercase font-bold text-center">Log in
                         </Link>
-                        <View
-                            style={styles.separator}
-                            lightColor="#eee"
-                            darkColor="rgba(255,255,255,0.1)"
-                        />
-                    </View>
+                    </Button>
                 </View>
-                <View className="mt-8">
-                    <View
-                        style={styles.separator}
-                        lightColor="#eee"
-                        darkColor="rgba(255,255,255,0.1)"
-                    />
-                    <Link href="/signup" className="w-full text-center py-8">
-                        <Text
-                        style={styles.title}
-                        className="text-center"
-                        >Create account</Text>
-                    </Link>
-                    </View>
-                    <View
-                        style={styles.separator}
-                        lightColor="#eee"
-                        darkColor="rgba(255,255,255,0.1)"
-                    />
-                    </View>
-                <View>
+                <View className="w-1/2">
+                    <Button color={"#311B92"}>
+                        <Link href="/login"
+                        className="h-full w-full text-[#F2F2F2] uppercase font-bold text-center">Create account
+                        </Link>
+                    </Button>
+                </View>
             </View>
             <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    title: {
-      fontSize: 20,
-      fontWeight: "bold",
-    },
-    separator: {
-      height: 2,
-      width: "100%",
-    },
-  });
 
 export default Unauth
