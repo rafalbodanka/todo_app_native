@@ -87,6 +87,14 @@ function RootLayoutNav() {
               headerTitle: "Navigation",
               presentation: "modal",
             }} />
+            <Stack.Screen name="user-settings" options={{
+              headerTitle: "User settings",
+              presentation: "modal",
+            }} />
+            <Stack.Screen name="edit-task" options={{
+              headerTitle: "Edit task",
+              presentation: "modal",
+            }} />
           </Stack>
       </ThemeProvider>
     </SafeAreaProvider>

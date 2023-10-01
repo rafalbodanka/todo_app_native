@@ -18,7 +18,7 @@ const Unauth = () => {
                 </View>
                 <View className="w-1/2">
                     <Button color={"#311B92"}>
-                        <Link href="/login"
+                        <Link href="/signup"
                         className="h-full w-full text-[#F2F2F2] uppercase font-bold text-center">Create account
                         </Link>
                     </Button>
