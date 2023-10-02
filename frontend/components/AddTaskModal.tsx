@@ -6,6 +6,8 @@ import SelectDropdown from 'react-native-select-dropdown'
 import { useAppSelector } from '../redux/hooks';
 import { selectColumns } from '../redux/currentTable';
 import { ColumnType } from '../types/Types';
+import { useTheme } from '@react-navigation/native';
+import Colors from '../constants/Colors';
 
 export default function AddTaskModal() {
 
@@ -17,15 +19,17 @@ export default function AddTaskModal() {
         console.log(taskTitle)
     }
 
+    const theme = useTheme()
+
     return (
         <SafeAreaView>
             <View className="flex justify-center items-center w-full">
                 <View className="w-3/5">
                 <SelectDropdown
-                    rowStyle={{backgroundColor: '#171717'}}
-                    rowTextStyle={{color: "#F2F2F2"}}
-                    buttonStyle={{width: 'auto', backgroundColor: 'black'}}
-                    buttonTextStyle={{color: "#F2F2F2"}}
+                    rowStyle={{backgroundColor: theme.colors.background}}
+                    rowTextStyle={{color: theme.colors.text}}
+                    buttonStyle={{width: 'auto', backgroundColor: theme.colors.background}}
+                    buttonTextStyle={{color: theme.colors.text}}
                     defaultButtonText={columns[0]}
                     data={columns}
                         onSelect={(_, index) => {
@@ -42,23 +46,10 @@ export default function AddTaskModal() {
                             return item
                         }}
                     />
-                    <Input placeholder='Title' inputStyle={{color: "white"}} onChangeText={(val) => setTaskTitle(val)}></Input>
-                    <Button title={"Add task"} color={"#311B92"} onPress={handleAddTask}></Button>
+                    <Input placeholder='Title' inputStyle={{color: theme.colors.text}} onChangeText={(val) => setTaskTitle(val)}></Input>
+                    <Button title={"Add task"} color={Colors.deepPurple.background} onPress={handleAddTask}></Button>
                 </View>
             </View>
         </SafeAreaView>
     )
 }
-const styles = StyleSheet.create({
-    dropdownOverlayView: {
-      backgroundColor: '#EFEFEF',
-    },
-    shadow: {
-      shadowColor: '#000',
-      shadowOffset: {width: 0, height: 6},
-      shadowOpacity: 0.1,
-      shadowRadius: 10,
-      elevation: 10,
-    },
-  });
-  

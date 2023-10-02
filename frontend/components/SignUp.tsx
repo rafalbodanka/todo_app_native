@@ -6,8 +6,11 @@ import Ionicons from '@expo/vector-icons/Entypo';
 import { TouchableHighlight } from 'react-native';
 import axios from 'axios';
 import { router } from 'expo-router';
+import { useTheme } from '@react-navigation/native';
 
 export default function SignUp() {
+
+  const theme = useTheme()
 
     const [firstNameInputValue, setFirstNameInputValue] = useState("")
     const [lastNameInputValue, setLastNameInputValue] = useState("")
@@ -143,16 +146,16 @@ export default function SignUp() {
         <SafeAreaView>
             <View className="flex justify-center items-center w-full mt-20">
                 <View className="w-3/5">
-                  {!isRegisteredSuccesfully ? 
+                  {!isRegisteredSuccesfully ?
                   <>
-                    <Input placeholder='First name' inputStyle={{color: "white"}}
+                    <Input placeholder='First name' inputStyle={{color: theme.colors.text}}
                     errorMessage={!isFirstNameValid ? invalidFirstNameMessage : ""} textContentType='name'
                     onChangeText={(val) => {
                       setFirstNameInputValue(val)
                       setIsFirstNameValid(true)
                       }}>
                     </Input>
-                    <Input placeholder='Last name' inputStyle={{color: "white"}}
+                    <Input placeholder='Last name' inputStyle={{color: theme.colors.text}}
                     errorMessage={!isLastNameValid ? invalidLastNameMessage : ""}
                     textContentType='familyName'
                     onChangeText={(val) => {
@@ -160,7 +163,7 @@ export default function SignUp() {
                       setIsLastNameValid(true)
                       }}>
                     </Input>
-                    <Input placeholder='Email' inputStyle={{color: "white"}}
+                    <Input placeholder='Email' inputStyle={{color: theme.colors.text}}
                     errorMessage={!isEmailValid ? invalidEmailMessage : ""}
                     onChangeText={(val) => {
                       setEmailInputValue(val)
@@ -169,7 +172,7 @@ export default function SignUp() {
                     </Input>
                     <View className='relative'>
                         <Input ref={passwordInputRef} placeholder='Password'
-                        inputStyle={{color: "white"}} secureTextEntry={!isPasswordVisible}
+                        inputStyle={{color: theme.colors.text}} secureTextEntry={!isPasswordVisible}
                         errorMessage={!isPasswordValid ? invalidPasswordMessage : ""}
                         textContentType='password'
                         onChangeText={(val) => {

@@ -9,14 +9,14 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAppDispatch } from '../redux/hooks';
 import { setIsLoggedIn } from '../redux/auth';
-
+import { useTheme } from '@react-navigation/native';
 export default function Login() {
 
     const [emailInputValue, setEmailInputValue] = useState("")
     const [passwordInputValue, setPasswordInputValue] = useState("")
     const [isPasswordVisible, setPasswordVisible] = useState(false);
     const dispatch = useAppDispatch()
-
+    const theme = useTheme();
     const passwordInputRef = useRef(null)
     const handleChangePasswordVisibility = () => {
         setPasswordVisible(prev => !prev)
@@ -108,7 +108,7 @@ export default function Login() {
                 <View className="w-3/5">
                 <Input placeholder='Email'
                 errorMessage={!isEmailValid ? invalidEmailMessage : ""}
-                inputStyle={{color: "white"}}
+                inputStyle={{color: theme.colors.text}}
                 onChangeText={(val) => {
                   setEmailInputValue(val)
                   setIsEmailValid(true)
@@ -118,7 +118,7 @@ export default function Login() {
                     <View className='relative'>
                         <Input ref={passwordInputRef} placeholder='Password'
                         errorMessage={!isPasswordValid ? invalidPasswordMessage : ""}
-                        inputStyle={{color: "white"}}
+                        inputStyle={{color: theme.colors.text}}
                         secureTextEntry={!isPasswordVisible} textContentType='password'
                         onChangeText={(val) => {
                           setPasswordInputValue(val)

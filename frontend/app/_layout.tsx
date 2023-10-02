@@ -76,7 +76,7 @@ function RootLayoutNav() {
               headerShown: false,
               }} />
             <Stack.Screen name="tables" options={{
-              headerTitle: "Tables",              
+              headerTitle: "Tables",
               presentation: "modal",
             }} />
             <Stack.Screen name="add-task" options={{
