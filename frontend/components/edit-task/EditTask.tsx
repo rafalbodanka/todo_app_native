@@ -3,7 +3,7 @@ import { useLocalSearchParams } from "expo-router"
 import { View, Text } from "../Themed"
 import { ActivityIndicator } from 'react-native';
 import axios from "axios"
-import { Member, TaskType } from "../../types/Types";
+import { Member, TaskType, User } from "../../types/Types";
 import { Input, Button, CheckBox, Slider, Icon } from "@rneui/themed";
 import { useTheme } from "@react-navigation/native";
 import Colors from "../../constants/Colors";
@@ -15,7 +15,7 @@ import EditTaskCalendarPicker from "./EditTaskCalendarPicker";
 import EditTaskIsCompleted from "./EditTaskIsCompleted";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectCurrentTable, setColumns, setCurrentTable } from "../../redux/currentTable";
-import { Ionicons } from "@expo/vector-icons";
+import EditTaskResponsibleUsers from "./EditTaskResponsibleUsers";
 
 const EditTask = () => {
 
@@ -57,8 +57,7 @@ const EditTask = () => {
 		if (!task) return
 		const getResponsibleUsers = async () => {
 			try {
-				const response = await axios.post(`${API_URL}/tasks/${taskId}/responsible-users`,
-					{ currentTableId: currentTableId },
+				const response = await axios.get(`${API_URL}/tables/${currentTableId}/members`,
 					{
 						withCredentials: true,
 						headers: {
@@ -67,6 +66,7 @@ const EditTask = () => {
 						},
 					},
 				);
+				console.log(response.data.data)
 				setResponsibleUsers(response.data.data)
 			} catch (err) {
 				console.log(err)
@@ -86,16 +86,21 @@ const EditTask = () => {
 	}, [task])
 
 	const handleOnSave = () => {
+		const taskToSend = {
+			...task,
+			responsibleUsers: task?.responsibleUsers.map(user => user._id)
+		}
+		
 		const updateTask = async () => {
 			try {
 				const response = await axios.patch(`${API_URL}/tasks/${task?._id}/update`,
-				{
-					task: task,
-					currentTableId: currentTableId
-				},
-				{
-					withCredentials: true,
-				})
+					{
+						task: taskToSend,
+						currentTableId: currentTableId
+					},
+					{
+						withCredentials: true,
+					})
 				dispatch(setCurrentTable(response.data.data))
 			} catch (err) {
 				console.log(err)
@@ -106,20 +111,20 @@ const EditTask = () => {
 	}
 
 	const handleTitleChange = (newTitle: string) => {
-		task && setTask({...task, title: newTitle})
+		task && setTask({ ...task, title: newTitle })
 	}
 
 	return (
 		<View>
 			<ScrollView
-			className="w-full h-full"
-			contentContainerStyle={{
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-				minHeight: "100%",
-				paddingVertical: 20,
-			}}
+				className="w-full h-full"
+				contentContainerStyle={{
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+					minHeight: "100%",
+					paddingVertical: 20,
+				}}
 			>
 				<View className="w-full flex justify-center items-center">
 					{isFetching ?
@@ -135,13 +140,13 @@ const EditTask = () => {
 											</Text>
 										}
 										<Text className="text-gray-500">{`Updated on ${formatDistance(new Date(task.updatedAt), new Date(), { addSuffix: true })}`}</Text>
-										<EditTaskIsCompleted task={task} setTask={setTask}/>
+										<EditTaskIsCompleted task={task} setTask={setTask} />
 										<View className="mt-4">
 											<Input onChangeText={handleTitleChange} containerStyle={{ paddingHorizontal: 0 }}
 												label="Title" defaultValue={task.title} style={{ color: theme.colors.text }}
 											></Input>
 										</View>
-										<EditTaskEstimationCheckbox task={task} setTask={setTask}/>
+										<EditTaskEstimationCheckbox task={task} setTask={setTask} />
 										{task.isEstimated &&
 											<View>
 												<EditTaskDifficultySlider task={task} setTask={setTask} />
@@ -149,25 +154,11 @@ const EditTask = () => {
 											</View>
 										}
 										<Input containerStyle={{ paddingHorizontal: 0 }} label="Notes" defaultValue={task.notes} style={{ color: theme.colors.text }} multiline></Input>
-										<View>
-											{responsibleUsers.length >= 1 &&
-												(
-													<View className="flex gap-4">
-														<Text style={{ color: theme.colors.text, fontSize: 22 }}>Assigned users:</Text>
-														{responsibleUsers.map(member => {
-															return (
-																<View key={member.user._id}
-																	className="flex flex-row justify-between items-center bg-neutral-200 p-2 px-4 rounded-lg">
-																	<Text style={{ color: theme.colors.text, fontSize: 20 }}>{member.user.email}</Text>
-																	<View className="ml-4 bg-neutral-200">
-																		<Ionicons name="person-remove" size={24}></Ionicons>
-																	</View>
-																</View>
-															)
-														})}
-													</View>
-												)}
-										</View>
+										<EditTaskResponsibleUsers
+											responsibleUsers={responsibleUsers}
+											task={task}
+											setTask={setTask}
+											/>
 										<Button title="Save changes" color={Colors.deepPurple.background}
 											containerStyle={{ marginTop: 16 }}
 											onPress={handleOnSave}
