@@ -26,7 +26,7 @@ const useFetchTables = () => {
     const API_URL = process.env.EXPO_PUBLIC_API_URL
   
     const getUserSet = async () => {
-        if (!user.email) return;
+      if (!user.email) return;
       setIsFetching(true)
       try {
         const response = await axios.get(`${API_URL}/tables/tables`, {

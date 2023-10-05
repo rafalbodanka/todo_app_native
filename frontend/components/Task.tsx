@@ -23,7 +23,7 @@ export default function Task({
     }
 
   return (
-	<TouchableHighlight onPress={() => {router.push({ pathname: `/edit-task/${task._id}` });}}>
+	<TouchableHighlight onPress={() => {router.push({ pathname: `/edit-task/`, params: { taskId: task._id } })}}>
 		<View className="relative flex border-white border-2 rounded-md">
 				<View className="w-64">
 					<View className="flex flex-row items-start">

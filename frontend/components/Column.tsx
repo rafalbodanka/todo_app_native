@@ -27,7 +27,7 @@ export default function Column({ column }: {column: ColumnType}) {
         <View className="flex flex-row justify-center pt-4 pb-16">
           <View className="flex">
           <AddTaskButton></AddTaskButton>
-          {column.pendingTasks.length > 0 && <Text>Pending tasks</Text>}
+          {column.pendingTasks?.length > 0 && <Text>Pending tasks</Text>}
               {column.pendingTasks.map((task) => {
                   return (
                       <View key={task._id} className="pt-4">

@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
 
 import { ScrollView, StyleSheet } from "react-native";
-
-import Colors from "../constants/Colors";
 import { Text, View } from "./Themed";
-import Task from "./Task";
-import { TableType } from "../types/Types";
 import Column from "./Column";
 import useFetchTables from "./hooks/useFetchTables";
 import { useAppSelector } from "../redux/hooks";
 import { selectCurrentTable } from "../redux/currentTable";
 
 export default function Table() {
-    const table = useAppSelector(selectCurrentTable)
-    
-    useFetchTables();
+  const table = useAppSelector(selectCurrentTable)
+
+  useFetchTables()
 
   return (
       <View className="flex flex-col justify-center px-16">

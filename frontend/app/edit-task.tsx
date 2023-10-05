@@ -1,4 +1,4 @@
-import EditTask from "../components/EditTask";
+import EditTask from "../components/edit-task/EditTask";
 
 export default function EditTaskScreen() {
     

@@ -94,7 +94,9 @@ function RootLayoutNav() {
             <Stack.Screen name="edit-task" options={{
               headerTitle: "Edit task",
               presentation: "modal",
-            }} />
+              }}
+              initialParams={{ taskId: '' }}
+            />
           </Stack>
       </ThemeProvider>
     </SafeAreaProvider>
