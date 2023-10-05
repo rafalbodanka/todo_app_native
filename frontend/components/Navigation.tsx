@@ -30,10 +30,11 @@ const Navigation = () => {
                 lightColor="#eee"
                 darkColor="rgba(255,255,255,0.1)"
               />
-              <Text
-              style={styles.title}
-              className="text-center"
-              >User settings</Text>
+              <Link href="/user-settings" className="text-center">
+                <Text
+                style={styles.title}
+                >User settings</Text>
+              </Link>
               </View>
             <View>
               <View

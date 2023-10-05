@@ -6,12 +6,12 @@ import { router } from "expo-router";
 import axios from "axios";
 import { setIsLoggedIn } from "../redux/auth";
 import { useAppDispatch } from "../redux/hooks";
-
+import { useTheme } from "@react-navigation/native";
 const Logout = () => {
 
     const API_URL = process.env.EXPO_PUBLIC_API_URL
     const dispatch = useAppDispatch()
-
+    const theme = useTheme()
     const handleLogout = async () => {
         try {
             await AsyncStorage.removeItem("connect.sid");
@@ -33,8 +33,8 @@ const Logout = () => {
     return (
         <TouchableHighlight onPress={handleLogout}>
             <Text
-              style={styles.title}
-              className="text-center text-white"
+              style={{...styles.title, color: theme.colors.text}}
+              className="text-center"
               >Logout</Text>
         </TouchableHighlight>
     )

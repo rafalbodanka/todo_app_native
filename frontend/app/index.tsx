@@ -14,12 +14,14 @@ import { Provider } from "react-redux";
 import { store } from "../redux/store";
 import Auth from "../components/auth/Auth";
 import useFetchUserData from "../components/hooks/useFetchUserData";
-import { Header } from "@rneui/themed";
+import { Header, darkColors } from "@rneui/themed";
 import { selectAuth } from "../redux/auth";
 import Unauth from "../components/Unauth";
+import { useTheme } from "@react-navigation/native";
 
 export default function index() {
 
+    const theme = useTheme()
     const currentTable = useAppSelector(selectCurrentTable)
     const isLoggedIn = useAppSelector(selectAuth)
     useFetchUserData()
@@ -28,17 +30,16 @@ export default function index() {
         <Auth>
             {isLoggedIn ?
                 <>
-                <Header backgroundColor="#171717"
-                containerStyle={{marginTop: 4, backgroundColor: "black"}}
-                barStyle="light-content"
+                <Header backgroundColor={theme.colors.background}
+                containerStyle={{marginTop: 4}}
                 rightComponent={
-                <Link className="text-white px-4 py-1 pt-2" href="/navigation">
-                    <Icon name="user" size={24} color="#F2F2F2" />
+                <Link className="px-4 py-1 pt-2" href="/navigation">
+                    <Icon name="user" size={24} style={{ color: theme.colors.text}} />
                 </Link>
                 }
                 centerComponent={
-                    <Link className="text-white px-2 py-1 flex pt-2" href="/tables">
-                    <Text className="text-lg text-white text-bold">{currentTable?.title}
+                <Link className="px-2 py-1 flex pt-2" href="/tables">
+                    <Text className="text-lg text-bold">{currentTable?.title}
                     </Text>
                 </Link>
                 }

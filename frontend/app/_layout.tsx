@@ -76,7 +76,7 @@ function RootLayoutNav() {
               headerShown: false,
               }} />
             <Stack.Screen name="tables" options={{
-              headerTitle: "Tables",              
+              headerTitle: "Tables",
               presentation: "modal",
             }} />
             <Stack.Screen name="add-task" options={{
@@ -87,6 +87,16 @@ function RootLayoutNav() {
               headerTitle: "Navigation",
               presentation: "modal",
             }} />
+            <Stack.Screen name="user-settings" options={{
+              headerTitle: "User settings",
+              presentation: "modal",
+            }} />
+            <Stack.Screen name="edit-task" options={{
+              headerTitle: "Edit task",
+              presentation: "modal",
+              }}
+              initialParams={{ taskId: '' }}
+            />
           </Stack>
       </ThemeProvider>
     </SafeAreaProvider>
