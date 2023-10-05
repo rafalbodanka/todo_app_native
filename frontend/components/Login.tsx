@@ -129,7 +129,7 @@ export default function Login() {
                         </Input>
                         <View className='absolute right-0 top-0 h-3/4 px-2 flex translate-x-8 flex-col justify-center items-center'>
                             <TouchableHighlight onPress={handleChangePasswordVisibility}>
-                                <Ionicons name={isPasswordVisible ? "eye-with-line" : "eye"} size={20} className='' color="#F2F2F2"></Ionicons>
+                                <Ionicons name={isPasswordVisible ? "eye-with-line" : "eye"} size={20} className='' color={theme.colors.text}></Ionicons>
                             </TouchableHighlight>
                         </View>
                     </View>
