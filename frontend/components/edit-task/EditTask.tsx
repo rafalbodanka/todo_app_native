@@ -118,9 +118,6 @@ const EditTask = () => {
 			<ScrollView
 				className="w-full h-full"
 				contentContainerStyle={{
-					display: "flex",
-					justifyContent: "center",
-					alignItems: "center",
 					minHeight: "100%",
 					paddingVertical: 20,
 				}}
