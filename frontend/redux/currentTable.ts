@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from './store'
 import type { TableType, ColumnType, TaskType } from '../types/Types'
+import tables from './tables';
 
 // Define the initial state using that type
 const initialState: TableType = {
@@ -25,9 +26,48 @@ export const currentTableSlice = createSlice({
     },
     setColumns: (
       state,
-      action: PayloadAction< ColumnType[]>
+      action: PayloadAction<ColumnType[]>
     ) => {
       state.columns = action.payload;
+    },
+    setColumnTitle: (
+      state,
+      action: PayloadAction<{columnId: string, newTitle: string}>
+    ) => {
+      const {columnId, newTitle} = action.payload;
+      state.columns = state.columns.map(col => {
+        if (col._id === columnId) {
+          return {...col, title: newTitle}
+        } else {
+          return col
+        }
+      })
+    },
+    addTask: (
+      state,
+      action: PayloadAction<{tableId: string, columnId: string, taskTitle: string}>
+    ) => {
+      const {tableId, columnId, taskTitle} = action.payload;
+      // const tasks = state.columns[columnId].pendingTasks
+      // const newTask: TaskType = {
+      //   _id: string;
+      //   title: string;
+      //   completed: boolean;
+      //   column: string;
+      //   notes: string;
+      //   createdAt: string;
+      //   updatedAt: string;
+      //   responsibleUsers: User[];
+      //   isEstimated: boolean;
+      //   difficulty: number;
+      //   // startDate and endDate for Redux purposes are
+      //   // stored as strings in frontend app
+      //   // because Date objects are non serializable
+      //   startDate: string;
+      //   endDate: string;
+      // }
+      // const newTasks = [...tasks, {
+      // }]
     },
     toggleCompletedTasksVisibility: (state, action: PayloadAction<string>) => {
       const columnId = action.payload;
@@ -71,6 +111,7 @@ export const currentTableSlice = createSlice({
 export const { 
   setCurrentTable,
   setColumns,
+  setColumnTitle,
   toggleCompletedTasksVisibility,
   changeTaskStatus,
 } = currentTableSlice.actions

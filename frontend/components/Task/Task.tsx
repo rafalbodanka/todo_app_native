@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useTheme } from "@react-navigation/native";
-import { Text, View } from "./Themed";
-import { ColumnType, TaskType } from "../types/Types";
-import { useAppDispatch } from "../redux/hooks";
-import { changeTaskStatus } from "../redux/currentTable";
+import { Text, View } from "../Themed";
+import { ColumnType, TaskType } from "../../types/Types";
+import { useAppDispatch } from "../../redux/hooks";
+import { changeTaskStatus } from "../../redux/currentTable";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { Link, router, useNavigation } from "expo-router";
 

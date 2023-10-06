@@ -1,14 +1,15 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { Text, View } from "./Themed";
-import Task from "./Task";
-import { ColumnType } from "../types/Types";
-import AddTaskButton from "./AddTaskButton";
+import { Text, View } from "../Themed";
+import Task from "../Task/Task";
+import { ColumnType } from "../../types/Types";
+import AddTaskButton from "../Task/AddTaskButton";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { useAppDispatch } from "../redux/hooks";
-import { toggleCompletedTasksVisibility } from "../redux/currentTable";
+import { useAppDispatch } from "../../redux/hooks";
+import { toggleCompletedTasksVisibility } from "../../redux/currentTable";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "@react-navigation/native";
+import ColumnName from "./ColumnName";
 
 export default function Column({ column }: {column: ColumnType}) {
 
@@ -20,10 +21,8 @@ export default function Column({ column }: {column: ColumnType}) {
   }
 
   return (
-    <View className="flex flex-col justify-center pt-4 pb-24">
-      <View className="flex flex-row justify-center">
-        <Text className="text-xl">{column?.title}</Text>
-      </View>
+    <View className="flex flex-col justify-center pt-4 pb-24  ">
+      <ColumnName column={column}/>
         <View className="flex flex-row justify-center pt-4 pb-16">
           <View className="flex">
           <AddTaskButton></AddTaskButton>

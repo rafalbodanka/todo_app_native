@@ -66,7 +66,6 @@ const EditTask = () => {
 						},
 					},
 				);
-				console.log(response.data.data)
 				setResponsibleUsers(response.data.data)
 			} catch (err) {
 				console.log(err)

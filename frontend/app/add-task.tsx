@@ -1,4 +1,4 @@
-import AddTaskModal from "../components/AddTaskModal";
+import AddTaskModal from "../components/Task/AddTaskModal";
 
 export default function AddTaskScreen() {
     

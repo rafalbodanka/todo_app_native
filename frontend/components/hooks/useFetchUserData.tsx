@@ -14,7 +14,6 @@ const useFetchUserData = () => {
     if (!isLoggedIn) return;
     const getUserData = async () => {
       const cookie = await AsyncStorage.getItem("connect.sid")
-      console.log(cookie)
       if (!cookie) return
       try {
         const response = await axios.get(`${API_URL}/users/user`, {

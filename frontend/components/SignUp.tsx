@@ -126,7 +126,6 @@ export default function SignUp() {
         email: emailInputValue,
         password: passwordInputValue,
       });
-      console.log(response)
       
       if (response.status === 201) {
         setIsRegisteredSuccesfully(true);

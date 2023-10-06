@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { ScrollView, StyleSheet } from "react-native";
 import { Text, View } from "./Themed";
-import Column from "./Column";
+import Column from "./Column/Column";
 import useFetchTables from "./hooks/useFetchTables";
 import { useAppSelector } from "../redux/hooks";
 import { selectCurrentTable } from "../redux/currentTable";
