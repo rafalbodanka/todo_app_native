@@ -57,6 +57,22 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 
+const CustomDefaultTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'transparent',
+  },
+}
+
+const CustomDarkTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'transparent',
+  },
+}
+
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const theme = useTheme()
@@ -64,10 +80,13 @@ function RootLayoutNav() {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <ThemeProvider value={colorScheme === "dark" ? CustomDarkTheme : CustomDefaultTheme}>
           <Stack screenOptions={{
-            navigationBarColor: colorScheme === "dark" ? "black" : theme.colors.background,
-            statusBarHidden: false,
+              navigationBarColor:
+              colorScheme === "dark" ?
+              CustomDarkTheme.colors.background
+              : CustomDefaultTheme.colors.background,
+              statusBarHidden: false,
             statusBarColor: Colors.deepPurple.background,
             }}>
             <Stack.Screen name="unauth" options={{

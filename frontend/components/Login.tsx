@@ -86,7 +86,6 @@ export default function Login() {
               { withCredentials: true }
             );
             if (response.status === 200) {
-            dispatch(setIsLoggedIn(true))
             const receivedCookie = response.headers['set-cookie']
             if (!receivedCookie) throw Error
             const [cookieName, cookieValue] = receivedCookie.toString().split(';')[0].split('=');
@@ -94,7 +93,7 @@ export default function Login() {
                 await AsyncStorage.setItem(cookieName, cookieValue);
               } catch (e) {
               }
-              router.back()
+              router.replace('/')
             }
         } catch (err) {
           setInvalidPasswordMessage("Invalid credentials.")

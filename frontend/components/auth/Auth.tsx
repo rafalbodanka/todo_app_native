@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import axios from "axios"
 import {ActivityIndicator, View} from 'react-native';
-import { router } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { setIsLoggedIn } from "../../redux/auth";
-
+import { selectAuth, setIsLoggedIn } from "../../redux/auth";
+import { useTheme } from "@react-navigation/native";
+import { Router } from "expo-router";
 type AuthProps = {
   children: React.ReactNode;
 };
@@ -14,9 +15,11 @@ const Auth: React.FC<AuthProps> = ({
   children,
 }) => {
 
+  const theme = useTheme()
   const [isLoading, setIsLoading] = useState(true);
     const API_URL = process.env.EXPO_PUBLIC_API_URL
     const dispatch = useAppDispatch()
+    const isLoggedIn = useAppSelector(selectAuth)
 
   useEffect(() => {
     // Check user's login status
@@ -52,7 +55,7 @@ const Auth: React.FC<AuthProps> = ({
 
   if (isLoading) {
     return (
-      <View className="flex w-screen h-screen bg-neutral-900 justify-center items-center">
+      <View className="flex w-screen h-screen justify-center items-center">
         <ActivityIndicator size="large" color="#311B92" />
       </View>
     );

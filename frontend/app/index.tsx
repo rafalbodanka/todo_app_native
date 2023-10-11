@@ -32,7 +32,8 @@ export default function index() {
                 <>
                 <Header
                 backgroundColor={theme.colors.card}
-                containerStyle={{marginTop: 4}}
+                containerStyle={{marginTop: 4, shadowColor: "black", shadowRadius: 2,
+                }}
                 rightComponent={
                 <Link className="px-4 py-1 pt-2" href="/navigation">
                     <Icon name="user" size={24} style={{ color: theme.colors.text}} />
