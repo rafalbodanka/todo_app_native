@@ -5,12 +5,14 @@ import { View, Text } from "../Themed"
 import { useAppDispatch } from "../../redux/hooks"
 import { setColumnTitle } from "../../redux/currentTable"
 import axios from "axios"
+import { useTheme } from "@react-navigation/native"
 
 const ColumnName = ({ column }: { column: ColumnType }) => {
 
 	const [newTitle, setNewTitle] = useState(column.title)
 	const dispatch = useAppDispatch()
 	const API_URL = process.env.EXPO_PUBLIC_API_URL
+	const theme = useTheme()
 
 	const handleColumnTitleSave = async () => {
 		if (newTitle === column.title) return
@@ -31,10 +33,10 @@ const ColumnName = ({ column }: { column: ColumnType }) => {
 	return (
 		<View className="flex flex-row justify-center">
 			<Input defaultValue={column.title}
-			onChangeText={val => setNewTitle(val)}
-			containerStyle={{width: 240}}
-			inputStyle={{textAlign: "center"}}
-			onBlur={handleColumnTitleSave}
+				onChangeText={val => setNewTitle(val)}
+				containerStyle={{width: 240}}
+				inputStyle={{textAlign: "center", color: theme.colors.text}}
+				onBlur={handleColumnTitleSave}
 			></Input>
 		</View>
 	)

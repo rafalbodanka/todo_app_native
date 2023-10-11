@@ -30,7 +30,8 @@ export default function index() {
         <Auth>
             {isLoggedIn ?
                 <>
-                <Header backgroundColor={theme.colors.background}
+                <Header
+                backgroundColor={theme.colors.card}
                 containerStyle={{marginTop: 4}}
                 rightComponent={
                 <Link className="px-4 py-1 pt-2" href="/navigation">
@@ -39,21 +40,17 @@ export default function index() {
                 }
                 centerComponent={
                 <Link className="px-2 py-1 flex pt-2" href="/tables">
-                    <Text className="text-lg text-bold">{currentTable?.title}
+                    <Text className="text-lg text-bold" style={{color: theme.colors.text}}>{currentTable?.title}
                     </Text>
                 </Link>
                 }
                 >
                 </Header>
-                    <View>
-                        <View>
-                            <ScrollView
-                            horizontal
-                            >
-                                <Table></Table>
-                            </ScrollView>
-                        </View>
-                    </View>
+                <ScrollView
+                horizontal
+                >
+                    <Table></Table>
+                </ScrollView>
                 </>
             :
             <Unauth></Unauth>

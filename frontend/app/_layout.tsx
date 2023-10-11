@@ -3,6 +3,7 @@ import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
+  useTheme,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Link, SplashScreen, Stack } from "expo-router";
@@ -15,6 +16,9 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useAppSelector } from "../redux/hooks";
 import { selectAuth } from "../redux/auth";
 import DeleteTask from "../components/Task/DeleteTask";
+import { ColorSchemeStore } from "nativewind/dist/style-sheet/color-scheme";
+import Colors from "../constants/Colors";
+import { ThemeConsumer } from "@rneui/themed";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -55,19 +59,24 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const theme = useTheme()
 
   return (
     <Provider store={store}>
       <SafeAreaProvider>
         <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-          <Stack>
+          <Stack screenOptions={{
+            navigationBarColor: colorScheme === "dark" ? "black" : theme.colors.background,
+            statusBarHidden: false,
+            statusBarColor: Colors.deepPurple.background,
+            }}>
             <Stack.Screen name="unauth" options={{
               headerTitle: "Sign up",
-              headerTitleAlign: "center"
-            }} />
+              headerTitleAlign: "center",
+            }}/>
             <Stack.Screen name="login" options={{
               presentation: "modal",
-              headerTitle: "Log in"
+              headerTitle: "Log in",
               }} />
             <Stack.Screen name="signup" options={{
               presentation: "modal",

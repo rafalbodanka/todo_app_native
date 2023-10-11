@@ -82,6 +82,7 @@ const EditTaskCalendarPicker: React.FC<{
       {isCalendarVisible &&
         <View className="mt-2 mb-8">
           <CalendarPicker allowRangeSelection
+          textStyle={{color: theme.colors.text}}
           startFromMonday
           ref={pickerRef}
           initialDate={new Date(startDate)}

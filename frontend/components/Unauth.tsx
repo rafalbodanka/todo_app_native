@@ -3,12 +3,15 @@ import { StatusBar } from "expo-status-bar";
 import { Platform } from "react-native"
 import { View } from "../components/Themed";
 import { Button } from "@rneui/themed";
+import { useTheme } from "@react-navigation/native";
 
 const Unauth = () => {
 
+    const theme = useTheme()
+
     return (
-        <View className="flex w-full h-full justify-center items-center">
-            <View className="flex justify-center flex-col gap-8">
+        <View className="flex w-full h-full justify-center items-center" style={{backgroundColor: theme.colors.background}}>
+            <View className="flex justify-center flex-col gap-8" style={{backgroundColor: theme.colors.background}}>
                 <View className="w-1/2">
                     <Button color={"#311B92"}>
                         <Link href="/login"
