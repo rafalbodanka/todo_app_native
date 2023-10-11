@@ -93,12 +93,12 @@ export default function Login() {
               try {
                 await AsyncStorage.setItem(cookieName, cookieValue);
               } catch (e) {
-                console.log(e)
               }
               router.back()
             }
         } catch (err) {
-            console.log(err)
+          setInvalidPasswordMessage("Invalid credentials.")
+          setIsPasswordValid(false)
         }
     }
 

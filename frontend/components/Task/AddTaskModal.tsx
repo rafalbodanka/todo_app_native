@@ -9,6 +9,7 @@ import { ColumnType } from '../../types/Types';
 import { useTheme } from '@react-navigation/native';
 import Colors from '../../constants/Colors';
 import axios from 'axios';
+import { router } from 'expo-router';
 
 export default function AddTaskModal() {
 
@@ -35,7 +36,10 @@ export default function AddTaskModal() {
                     "Content-Type": "application/json",
                 },
             })
-            dispatch(setCurrentTable(response.data.data))
+            if (response.status === 201) {
+                dispatch(setCurrentTable(response.data.data))
+                router.back()
+            }
         } catch (err) {
             console.log(err)
         }

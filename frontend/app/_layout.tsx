@@ -14,6 +14,7 @@ import ModalHeader from "../components/ModalHeader";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useAppSelector } from "../redux/hooks";
 import { selectAuth } from "../redux/auth";
+import DeleteTask from "../components/Task/DeleteTask";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -93,6 +94,7 @@ function RootLayoutNav() {
             }} />
             <Stack.Screen name="edit-task" options={{
               headerTitle: "Edit task",
+              headerRight: () => <DeleteTask></DeleteTask>,
               presentation: "modal",
               }}
               initialParams={{ taskId: '' }}
