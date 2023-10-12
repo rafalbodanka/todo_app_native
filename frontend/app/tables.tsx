@@ -9,6 +9,7 @@ import { setCurrentTable } from "../redux/currentTable";
 import { useNavigation } from '@react-navigation/native';
 import useFetchTables from "../components/hooks/useFetchTables";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { router } from "expo-router";
 
 export default function ModalScreen() {
 
@@ -22,6 +23,10 @@ export default function ModalScreen() {
         dispatch(setCurrentTable(table))
         navigation.goBack();
     }
+
+    const handleLongPress = (tableId: string) => {
+      router.push({ pathname: `/edit-table/`, params: { tableId: tableId } })
+  }
 
     const closeModal = () => {
       navigation.goBack();
@@ -38,7 +43,10 @@ export default function ModalScreen() {
                     lightColor="#eee"
                     darkColor="rgba(255,255,255,0.1)"
                     />
-                    <TouchableOpacity onPress={() => setNewCurrentTable(table)}>
+                    <TouchableOpacity
+                    onPress={() => setNewCurrentTable(table)}
+                    onLongPress={() => handleLongPress(table._id)}
+                    >
                         <Text
                         style={styles.title}
                         className="text-center"
