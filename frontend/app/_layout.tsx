@@ -61,21 +61,20 @@ const CustomDefaultTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: 'transparent',
+    transparent: 'transparent',
   },
 }
 
 const CustomDarkTheme = {
-  ...DefaultTheme,
+  ...DarkTheme,
   colors: {
-    ...DefaultTheme.colors,
-    background: 'transparent',
+    ...DarkTheme.colors,
+    transparent: 'transparent',
   },
 }
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
-  const theme = useTheme()
 
   return (
     <Provider store={store}>
@@ -84,8 +83,8 @@ function RootLayoutNav() {
           <Stack screenOptions={{
               navigationBarColor:
               colorScheme === "dark" ?
-              CustomDarkTheme.colors.background
-              : CustomDefaultTheme.colors.background,
+              CustomDarkTheme.colors.transparent
+              : CustomDefaultTheme.colors.transparent,
               statusBarHidden: false,
             statusBarColor: Colors.deepPurple.background,
             }}>

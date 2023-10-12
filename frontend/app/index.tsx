@@ -18,6 +18,7 @@ import { Header, darkColors } from "@rneui/themed";
 import { selectAuth } from "../redux/auth";
 import Unauth from "../components/Unauth";
 import { useTheme } from "@react-navigation/native";
+import Colors from "../constants/Colors";
 
 export default function index() {
 
@@ -32,6 +33,7 @@ export default function index() {
                 <>
                 <Header
                 backgroundColor={theme.colors.card}
+                statusBarProps={{backgroundColor: Colors.deepPurple.background, barStyle: "default"}}
                 containerStyle={{marginTop: 4, shadowColor: "black", shadowRadius: 2,
                 }}
                 rightComponent={

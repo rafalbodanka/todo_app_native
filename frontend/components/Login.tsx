@@ -102,7 +102,7 @@ export default function Login() {
     }
 
     return (
-        <SafeAreaView>
+        <SafeAreaView className='h-full' style={{backgroundColor: theme.colors.background}}>
             <View className="flex justify-center items-center w-full mt-20">
                 <View className="w-3/5">
                 <Input placeholder='Email'

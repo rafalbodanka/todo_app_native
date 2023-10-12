@@ -31,7 +31,7 @@ export default function Task({
 
   return (
 	<TouchableHighlight onPress={() => {router.push({ pathname: `/edit-task/`, params: { taskId: task._id } })}}>
-		<View className={`relative flex border-[1px] border-[${theme.colors.text}] rounded-md p-1`}>
+		<View className={`relative flex border-[1px] rounded-md p-1`} style={{ borderColor: theme.colors.text }}>
 				<View className="w-64">
 					<View className="flex flex-row items-start">
 						<View className="flex justify-start h-full">
