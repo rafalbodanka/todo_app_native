@@ -6,10 +6,11 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 import { router, useLocalSearchParams } from "expo-router"
 import { selectCurrentTable, setCurrentTable } from "../../redux/currentTable"
 import axios from "axios"
-import { TableType } from "../../types/Types"
+import { Member, TableType } from "../../types/Types"
 import { ActivityIndicator } from "react-native"
 import { Button, Input } from "@rneui/themed"
 import Colors from "../../constants/Colors"
+import TableMembers from "./TableMembers"
 
 const EditTable = () => {
 
@@ -20,6 +21,7 @@ const EditTable = () => {
 	const [initialTable, setInitialTable] = useState<TableType>()
 	const [isChanged, setIsChanged] = useState(false)
 	const currentTable = useAppSelector(selectCurrentTable)
+	const [tableMembers, setTableMembers] = useState<Member[]>()
 
 	const API_URL = process.env.EXPO_PUBLIC_API_URL
 	useEffect(() => {
@@ -43,27 +45,27 @@ const EditTable = () => {
 		getCurrentTableData();
 	}, [])
 
-	// useEffect(() => {
-	// 	if (!task) return
-	// 	const getResponsibleUsers = async () => {
-	// 		try {
-	// 			const response = await axios.get(`${API_URL}/tables/${currentTableId}/members`,
-	// 				{
-	// 					withCredentials: true,
-	// 					headers: {
-	// 						"Access-Control-Allow-Origin": "*",
-	// 						"Content-Type": "application/json",
-	// 					},
-	// 				},
-	// 			);
-	// 			setResponsibleUsers(response.data.data)
-	// 		} catch (err) {
-	// 			console.log(err)
-	// 		} finally {
-	// 		}
-	// 	}
-	// 	getResponsibleUsers();
-	// }, [task])
+	useEffect(() => {
+		const getResponsibleUsers = async () => {
+			try {
+				const response = await axios.get(`${API_URL}/tables/${currentTableIdFromParams}/members`,
+					{
+						withCredentials: true,
+						headers: {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json",
+						},
+					},
+				);
+				setTableMembers(response.data.data)
+			} catch (err) {
+				console.log(err)
+			} finally {
+			}
+		}
+		getResponsibleUsers();
+	}, [])
+
 
 	// useEffect(() => {
 	// 	if (isFetching) return
@@ -127,11 +129,7 @@ const EditTable = () => {
 											></Input>
 										</View>
 										{/* <Input containerStyle={{ paddingHorizontal: 0 }} label="Notes" defaultValue={task.notes} style={{ color: theme.colors.text }} multiline></Input> */}
-										{/* <EditTaskResponsibleUsers
-											responsibleUsers={responsibleUsers}
-											task={task}
-											setTask={setTask}
-											/> */}
+										{tableMembers && <TableMembers tableMembers={tableMembers}/> }
 										<Button title="Save changes" color={Colors.deepPurple.background}
 											containerStyle={{ marginTop: 16 }}
 											onPress={handleOnSave}
