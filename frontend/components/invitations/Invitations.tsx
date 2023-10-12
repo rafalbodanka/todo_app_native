@@ -19,8 +19,8 @@ const Invitations = () => {
 	const API_URL = process.env.EXPO_PUBLIC_API_URL
 	const [sentInvitations, setSentInvitations] = useState<Invitation[]>()
 	const [receivedInvitations, setReceivedInvitations] = useState<Invitation[]>()
-	const [isReceivedInvitationsOpen, setIsReceivedInvitationsOpen] = useState(false)
-	const [isSentInvitationsOpen, setIsSentInvitationsOpen] = useState(false)
+	const [isReceivedInvitationsOpen, setIsReceivedInvitationsOpen] = useState(true)
+	const [isSentInvitationsOpen, setIsSentInvitationsOpen] = useState(true)
 	const currentUserId = useAppSelector(selectUser)._id
 	const theme = useTheme()
 
@@ -97,6 +97,7 @@ const Invitations = () => {
 				<ScrollView className="w-full min-h-full">
 					<View>
 						<TouchableOpacity
+						disabled={receivedInvitations && receivedInvitations.length < 1}
 						className="flex flex-row items-center bg-neutral-400 h-10 border-b-[1px]"
 						onPress={() => setIsReceivedInvitationsOpen(prev => !prev)}
 						>
@@ -143,6 +144,7 @@ const Invitations = () => {
 							)
 						})}
 						<TouchableOpacity
+						disabled={sentInvitations && sentInvitations.length < 1}
 						className="flex flex-row items-center bg-neutral-400 h-10 border-b-[1px]"
 						onPress={() => setIsSentInvitationsOpen(prev => !prev)}
 						>
