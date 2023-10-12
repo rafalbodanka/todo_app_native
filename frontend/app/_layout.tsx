@@ -126,6 +126,13 @@ function RootLayoutNav() {
               }}
               initialParams={{ taskId: '' }}
             />
+            <Stack.Screen name="edit-table" options={{
+              headerTitle: "Edit table",
+              headerRight: () => <DeleteTask></DeleteTask>,
+              presentation: "modal",
+              }}
+              initialParams={{ tableId: '' }}
+            />
           </Stack>
       </ThemeProvider>
     </SafeAreaProvider>

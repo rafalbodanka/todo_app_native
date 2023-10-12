@@ -19,6 +19,9 @@ import { selectAuth } from "../redux/auth";
 import Unauth from "../components/Unauth";
 import { useTheme } from "@react-navigation/native";
 import Colors from "../constants/Colors";
+import TableHeader from "../components/table/TableHeader";
+import EditTable from "../components/table/EditTable";
+import EditTableHeader from "../components/table/TableHeader";
 
 export default function index() {
 
@@ -42,10 +45,7 @@ export default function index() {
                 </Link>
                 }
                 centerComponent={
-                <Link className="px-2 py-1 flex pt-2" href="/tables">
-                    <Text className="text-lg text-bold" style={{color: theme.colors.text}}>{currentTable?.title}
-                    </Text>
-                </Link>
+                    <TableHeader />
                 }
                 >
                 </Header>
