@@ -1,8 +1,37 @@
+import { useTheme } from "@react-navigation/native";
 import { Member } from "../../types/Types";
 import { View, Text } from "../Themed";
 import EditTableAddMember from "./EditTableAddMember";
+import { Ionicons } from "@expo/vector-icons"
+import { TouchableOpacity } from "react-native";
+import axios from "axios";
+import { useAppSelector } from "../../redux/hooks";
+import { selectCurrentTable } from "../../redux/currentTable";
 
-const TableMembers = ({tableMembers}: {tableMembers: Member[]}) => {
+const TableMembers = ({
+    tableMembers, setTableMembers
+    }:
+    {
+    tableMembers: Member[],
+    setTableMembers: React.Dispatch<React.SetStateAction<Member[] | undefined>>;
+}) => {
+
+    const theme = useTheme()
+    const API_URL = process.env.EXPO_PUBLIC_API_URL
+    const tableId = useAppSelector(selectCurrentTable)._id
+
+    const handleDeleteMember = async (userId: string) => {
+        try {
+            const response = await axios.post(`${API_URL}/tables/${tableId}/remove-member`, 
+            {
+                memberId: userId,
+            })
+            setTableMembers(response.data.data)
+            console.log(response.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     return (
         <View>
@@ -13,7 +42,10 @@ const TableMembers = ({tableMembers}: {tableMembers: Member[]}) => {
             {tableMembers?.map(member => {
                 return (
                     <View key={member.user._id}>
-                        <Text>{member.user.firstName}</Text>
+                        <Text>{member.user.firstName} {member.user.lastName} {member.user.email} {member.permission} {member.user.level}</Text>
+                        <TouchableOpacity onPress={() => handleDeleteMember(member.user._id)}>
+                            <Ionicons name="person-remove" size={16} color={theme.colors.text}></Ionicons>
+                        </TouchableOpacity>
                     </View>
                 )
             })}

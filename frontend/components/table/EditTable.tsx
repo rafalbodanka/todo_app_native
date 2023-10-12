@@ -129,7 +129,7 @@ const EditTable = () => {
 											></Input>
 										</View>
 										{/* <Input containerStyle={{ paddingHorizontal: 0 }} label="Notes" defaultValue={task.notes} style={{ color: theme.colors.text }} multiline></Input> */}
-										{tableMembers && <TableMembers tableMembers={tableMembers}/> }
+										{tableMembers && <TableMembers tableMembers={tableMembers} setTableMembers={setTableMembers}/> }
 										<Button title="Save changes" color={Colors.deepPurple.background}
 											containerStyle={{ marginTop: 16 }}
 											onPress={handleOnSave}
