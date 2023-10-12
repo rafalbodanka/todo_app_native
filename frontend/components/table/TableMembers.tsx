@@ -7,6 +7,7 @@ import { TouchableOpacity } from "react-native";
 import axios from "axios";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentTable } from "../../redux/currentTable";
+import { selectUser } from "../../redux/user";
 
 const TableMembers = ({
     tableMembers, setTableMembers
@@ -19,6 +20,9 @@ const TableMembers = ({
     const theme = useTheme()
     const API_URL = process.env.EXPO_PUBLIC_API_URL
     const tableId = useAppSelector(selectCurrentTable)._id
+    const currentUser = useAppSelector(selectUser)
+    const currentUserPermission = tableMembers
+        .find(member => member.user._id === currentUser._id)?.permission || 'none';
 
     const handleDeleteMember = async (userId: string) => {
         try {
@@ -42,10 +46,13 @@ const TableMembers = ({
             {tableMembers?.map(member => {
                 return (
                     <View key={member.user._id}>
-                        <Text>{member.user.firstName} {member.user.lastName} {member.user.email} {member.permission} {member.user.level}</Text>
+                        <Text>{currentUser._id===member.user._id && <Text className="font-bold">(You)</Text>} {member.user.firstName} {member.user.lastName} {member.user.email} {member.permission} {member.user.level}</Text>
+                        {currentUser._id !== member.user._id && currentUserPermission === 'admin'
+                        &&
                         <TouchableOpacity onPress={() => handleDeleteMember(member.user._id)}>
                             <Ionicons name="person-remove" size={16} color={theme.colors.text}></Ionicons>
                         </TouchableOpacity>
+                        }
                     </View>
                 )
             })}
