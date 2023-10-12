@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Text, View } from "../Themed";
-import Task from "../Task/Task";
+import Task from "../task/Task";
 import { ColumnType } from "../../types/Types";
-import AddTaskButton from "../Task/AddTaskButton";
+import AddTaskButton from "../task/AddTaskButton";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useAppDispatch } from "../../redux/hooks";
 import { toggleCompletedTasksVisibility } from "../../redux/currentTable";

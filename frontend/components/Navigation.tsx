@@ -15,14 +15,16 @@ const Navigation = () => {
             <View>
               <View
                 style={styles.separator}
-                className=" flex flex-row justify-center"
                 lightColor="#eee"
                 darkColor="rgba(255,255,255,0.1)"
               />
-              <Text
-              style={styles.title}
-              className="text-center py-8"
-              >Invitations</Text>
+              <TouchableOpacity>
+                <Link href="/invitations" className="text-center py-8">
+                  <Text
+                  style={styles.title}
+                  >Invitations</Text>
+                </Link>
+              </TouchableOpacity>
             </View>
             <View>
               <View
@@ -37,7 +39,7 @@ const Navigation = () => {
                   >User settings</Text>
                 </Link>
               </TouchableOpacity>
-              </View>
+            </View>
             <View>
               <View
                 style={styles.separator}

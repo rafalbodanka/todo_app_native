@@ -15,7 +15,7 @@ import ModalHeader from "../components/ModalHeader";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useAppSelector } from "../redux/hooks";
 import { selectAuth } from "../redux/auth";
-import DeleteTask from "../components/Task/DeleteTask";
+import DeleteTask from "../components/task/DeleteTask";
 import { ColorSchemeStore } from "nativewind/dist/style-sheet/color-scheme";
 import Colors from "../constants/Colors";
 import { ThemeConsumer } from "@rneui/themed";
@@ -132,6 +132,11 @@ function RootLayoutNav() {
               presentation: "modal",
               }}
               initialParams={{ tableId: '' }}
+            />
+            <Stack.Screen name="invitations" options={{
+              headerTitle: "Invitations",
+              presentation: "modal",
+              }}
             />
           </Stack>
       </ThemeProvider>
