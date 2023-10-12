@@ -8,6 +8,7 @@ import { selectTables } from "../redux/tables";
 import { setCurrentTable } from "../redux/currentTable";
 import { useNavigation } from '@react-navigation/native';
 import useFetchTables from "../components/hooks/useFetchTables";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function ModalScreen() {
 
@@ -30,19 +31,19 @@ export default function ModalScreen() {
       <View className="flex-1 flex-col">
         {tables.map(table => {
             return (
-            <View>
+            <View key={table._id}>
                 <View
                     style={styles.separator}
                     className=""
                     lightColor="#eee"
                     darkColor="rgba(255,255,255,0.1)"
                     />
-                    <TouchableHighlight onPress={() => setNewCurrentTable(table)}>
+                    <TouchableOpacity onPress={() => setNewCurrentTable(table)}>
                         <Text
                         style={styles.title}
                         className="text-center"
                         >{table.title}</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
             )
         })}
@@ -55,9 +56,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    paddingVertical: 30,
   },
   separator: {
-    marginVertical: 30,
     height: 2,
     width: "100%",
   },
