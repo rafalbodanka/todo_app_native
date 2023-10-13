@@ -12,6 +12,7 @@ import { useTheme } from "@react-navigation/native";
 import Colors from "../constants/Colors";
 import TableHeader from "./table/TableHeader";
 import Loader from "./Loader";
+import AddColumn from "./table/AddColumn";
 
 export default function Table() {
 	const table = useAppSelector(selectCurrentTable)
@@ -44,7 +45,7 @@ export default function Table() {
 					<ScrollView
 						horizontal
 					>
-						<View className="flex flex-col justify-center px-16">
+						<View className="flex flex-col justify-center pl-16">
 							<View className="flex flex-row justify-center gap-8">
 								{table?.columns.map(column => {
 									return (
@@ -54,6 +55,7 @@ export default function Table() {
 										</ScrollView>
 									)
 								})}
+								<AddColumn />
 							</View>
 						</View>
 					</ScrollView>
