@@ -13,12 +13,14 @@ import Colors from "../constants/Colors";
 import TableHeader from "./table/TableHeader";
 import Loader from "./Loader";
 import AddColumn from "./table/AddColumn";
+import { selectTables } from "../redux/tables";
+import AddTable from "./table/AddTable";
 
 export default function Table() {
 	const table = useAppSelector(selectCurrentTable)
 	const [isFetching, setIsFetching] = useState(true)
 	const theme = useTheme()
-
+	const tables = useAppSelector(selectTables)
 	useFetchTables(setIsFetching)
 	console.log
 
@@ -42,11 +44,12 @@ export default function Table() {
 						}
 					>
 					</Header>
+					{tables.length > 0 ?
 					<ScrollView
 						horizontal
 					>
-						<View className="flex flex-col justify-center pl-16">
-							<View className="flex flex-row justify-center gap-8">
+						<View className={`flex flex-col justify-center ${tables.length > 0 && "pl-16"}`}>
+							<View className={`flex flex-row justify-center ${tables.length > 0 && "gap-8"}`}>
 								{table?.columns.map(column => {
 									return (
 										<ScrollView key={column._id} showsVerticalScrollIndicator={false}
@@ -59,6 +62,9 @@ export default function Table() {
 							</View>
 						</View>
 					</ScrollView>
+					:
+					<AddTable />
+					}
 				</>
 				:
 				<Loader/>
