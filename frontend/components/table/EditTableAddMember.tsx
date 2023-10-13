@@ -77,7 +77,7 @@ const EditTableAddMember = () => {
 					onPress={() => setIsAddMemberModalOpen(true)}
 				>
 					<Ionicons name="person-add" size={16} color={theme.colors.text}></Ionicons>
-					<Text>Add member</Text>
+					<Text style={{color: theme.colors.text}}>Add member</Text>
 				</TouchableOpacity>
 			</View>
 			<ReactNativeModal

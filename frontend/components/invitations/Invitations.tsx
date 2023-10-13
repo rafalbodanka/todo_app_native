@@ -11,6 +11,7 @@ import { Invitation } from "../../types/Types"
 import Colors, { green, red } from "../../constants/Colors"
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useTheme } from "@react-navigation/native"
+import Loader from "../Loader"
 
 const Invitations = () => {
 
@@ -24,7 +25,7 @@ const Invitations = () => {
 	const currentUserId = useAppSelector(selectUser)._id
 	const theme = useTheme()
 
-	//fetch invitations
+	// fetch invitations
 	useEffect(() => {
 		const getSentInvitations = async () => {
 			try {
@@ -99,9 +100,10 @@ const Invitations = () => {
 						<TouchableOpacity
 						disabled={receivedInvitations && receivedInvitations.length < 1}
 						className="flex flex-row items-center bg-neutral-400 h-10 border-b-[1px]"
+						style={{backgroundColor: (receivedInvitations && receivedInvitations.length >= 1) ? Colors.deepPurple.background : theme.colors.card}}
 						onPress={() => setIsReceivedInvitationsOpen(prev => !prev)}
 						>
-							<Text className="pl-4 text-[16px] font-bold">Received invitations ({receivedInvitations?.length || 0})</Text>
+							<Text className="pl-4 text-[16px] font-bold" style={{color: Colors.deepPurple.text}}>Received invitations ({receivedInvitations?.length || 0})</Text>
 							<Icon
 								size={18}
 								color={theme.colors.text}
@@ -113,10 +115,10 @@ const Invitations = () => {
 						</TouchableOpacity>
 						{isReceivedInvitationsOpen && receivedInvitations?.map(receivedInvitation => {
 							return (
-								<View key={receivedInvitation._id} className="w-full p-8 border-b-[1px] border-black">
+								<View key={receivedInvitation._id} className="w-full p-8 border-b-[1px]" style={{borderColor: theme.colors.text}}>
 									<Text className="text-center">
 									{
-									`${receivedInvitation.inviterFirstName} ${receivedInvitation.inviterLastName} (${receivedInvitation.inviterEmail}) invited you to table `
+									`${receivedInvitation.inviterFirstName} ${receivedInvitation.inviterLastName} (${receivedInvitation.inviterEmail}) invited you to the table `
 									}
 										<Text className="font-bold">
 											{receivedInvitation.tableName}
@@ -145,10 +147,11 @@ const Invitations = () => {
 						})}
 						<TouchableOpacity
 						disabled={sentInvitations && sentInvitations.length < 1}
-						className="flex flex-row items-center bg-neutral-400 h-10 border-b-[1px]"
+						className="flex flex-row items-center h-10 border-b-[1px]"
+						style={{backgroundColor: (sentInvitations && sentInvitations.length >= 1) ? Colors.deepPurple.background : theme.colors.card}}
 						onPress={() => setIsSentInvitationsOpen(prev => !prev)}
 						>
-							<Text className="pl-4 text-[16px] font-bold">Sent invitations ({sentInvitations?.length})</Text>
+							<Text className="pl-4 text-[16px] font-bold" style={{color: Colors.deepPurple.text}}>Sent invitations ({sentInvitations?.length})</Text>
 							<Icon
 								size={18}
 								color={theme.colors.text}
@@ -160,10 +163,10 @@ const Invitations = () => {
 						</TouchableOpacity>
 						{isSentInvitationsOpen && sentInvitations?.map(sentInvitation => {
 							return (
-								<View key={sentInvitation._id} className="w-full p-8 border-b-[1px] border-black">
+								<View key={sentInvitation._id} className="w-full p-8 border-b-[1px]" style={{borderColor: theme.colors.text}}>
 									<Text className="mb-4 text-center">
 									{
-									`${sentInvitation.inviterFirstName} ${sentInvitation.inviterLastName} (${sentInvitation.inviterEmail}) invited you to table `
+									`You invited ${sentInvitation.inviteeEmail} to the table `
 									}
 										<Text className="font-bold">
 											{sentInvitation.tableName}
@@ -185,15 +188,7 @@ const Invitations = () => {
 					</View>
 				</ScrollView>
 				:
-				<View
-					className="w-full h-full flex justify-center items-center"
-					style={{
-						minHeight: "100%",
-						paddingVertical: 20,
-					}}
-				>
-					<ActivityIndicator size="large" color="#311B92" />
-				</View>
+				<Loader/>
 			}
 		</>
 	)

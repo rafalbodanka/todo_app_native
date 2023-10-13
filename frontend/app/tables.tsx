@@ -7,13 +7,11 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { selectTables } from "../redux/tables";
 import { setCurrentTable } from "../redux/currentTable";
 import { useNavigation } from '@react-navigation/native';
-import useFetchTables from "../components/hooks/useFetchTables";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { router } from "expo-router";
 
 export default function ModalScreen() {
 
-  useFetchTables()
 
   const tables = useAppSelector(selectTables)
     const dispatch = useAppDispatch()

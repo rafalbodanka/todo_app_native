@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { selectAuth, setIsLoggedIn } from "../../redux/auth";
 import { useTheme } from "@react-navigation/native";
 import { Router } from "expo-router";
+import Loader from "../Loader";
 type AuthProps = {
   children: React.ReactNode;
 };
@@ -55,9 +56,7 @@ const Auth: React.FC<AuthProps> = ({
 
   if (isLoading) {
     return (
-      <View className="flex w-screen h-screen justify-center items-center">
-        <ActivityIndicator size="large" color="#311B92" />
-      </View>
+      <Loader/>
     );
   }
 

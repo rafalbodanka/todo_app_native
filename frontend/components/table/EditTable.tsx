@@ -19,9 +19,10 @@ const EditTable = () => {
 	const theme = useTheme()
 	const dispatch = useAppDispatch()
 	const [initialTable, setInitialTable] = useState<TableType>()
-	const [isChanged, setIsChanged] = useState(false)
 	const currentTable = useAppSelector(selectCurrentTable)
 	const [tableMembers, setTableMembers] = useState<Member[]>()
+	const [isTitleChanged, setIsTitleChanged] = useState(false)
+	const [newTableTitle, setNewTableTitle] = useState("")
 
 	const API_URL = process.env.EXPO_PUBLIC_API_URL
 	useEffect(() => {
@@ -66,15 +67,14 @@ const EditTable = () => {
 		getResponsibleUsers();
 	}, [])
 
-
-	// useEffect(() => {
-	// 	if (isFetching) return
-	// 	if (JSON.stringify(task) !== JSON.stringify(initialTask)) {
-	// 		setIsChanged(true)
-	// 	} else {
-	// 		setIsChanged(false)
-	// 	}
-	// }, [task])
+	useEffect(() => {
+		if (isFetching) return
+		if (JSON.stringify(newTableTitle) !== JSON.stringify(initialTable?.title)) {
+			setIsTitleChanged(true)
+		} else {
+			setIsTitleChanged(false)
+		}
+	}, [newTableTitle])
 
 	const handleOnSave = () => {
 	// 	const taskToSend = {
@@ -102,7 +102,7 @@ const EditTable = () => {
 	}
 
 	const handleTitleChange = (newTitle: string) => {
-	// 	task && setTask({ ...task, title: newTitle })
+		setNewTableTitle(newTitle)
 	}
 
     return (
@@ -133,7 +133,7 @@ const EditTable = () => {
 										<Button title="Save changes" color={Colors.deepPurple.background}
 											containerStyle={{ marginTop: 16 }}
 											onPress={handleOnSave}
-											disabled={!isChanged}></Button>
+											disabled={!isTitleChanged}></Button>
 									</View>
 								</View>
 							)
