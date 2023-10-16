@@ -115,7 +115,7 @@ const Invitations = () => {
 						</TouchableOpacity>
 						{isReceivedInvitationsOpen && receivedInvitations?.map(receivedInvitation => {
 							return (
-								<View key={receivedInvitation._id} className="w-full p-8 border-b-[1px]" style={{borderColor: theme.colors.text}}>
+								<View key={receivedInvitation._id} className="w-full p-4 border-b-[1px]" style={{borderColor: theme.colors.text}}>
 									<Text className="text-center">
 									{
 									`${receivedInvitation.inviterFirstName} ${receivedInvitation.inviterLastName} (${receivedInvitation.inviterEmail}) invited you to the table `
@@ -124,7 +124,7 @@ const Invitations = () => {
 											{receivedInvitation.tableName}
 										</Text>
 									</Text>
-									<View className="w-full flex flex-row justify-center items-center gap-4">
+									<View className="w-full flex flex-row justify-center items-center gap-x-4 my-4">
 										<View>
 											<Button
 											onPress={() => handleAcceptInvitation(receivedInvitation._id)}
@@ -163,8 +163,8 @@ const Invitations = () => {
 						</TouchableOpacity>
 						{isSentInvitationsOpen && sentInvitations?.map(sentInvitation => {
 							return (
-								<View key={sentInvitation._id} className="w-full p-8 border-b-[1px]" style={{borderColor: theme.colors.text}}>
-									<Text className="mb-4 text-center">
+								<View key={sentInvitation._id} className="w-full p-4 border-b-[1px]" style={{borderColor: theme.colors.text}}>
+									<Text className="text-center">
 									{
 									`You invited ${sentInvitation.inviteeEmail} to the table `
 									}
@@ -172,7 +172,7 @@ const Invitations = () => {
 											{sentInvitation.tableName}
 										</Text>
 									</Text>
-									<View className="w-full flex flex-row justify-center items-center gap-4">
+									<View className="w-full flex flex-row justify-center items-center gap-x-4 my-4">
 										<View>
 											<Button
 											onPress={() => handleCancelInvitation(sentInvitation._id, 'cancel')}
