@@ -27,10 +27,8 @@ const AddTable = ({isInHeader} : {isInHeader: boolean}) => {
             {
                 title: newTableTitle,
             })
-            console.log(response.data.data)
             dispatch(setTables(response.data.data))
             dispatch(setCurrentTable(response.data.data[response.data.data.length - 1]))
-            console.log(response.data[response.data.length - 1])
         } catch(err) {
             console.log(err)
         }
