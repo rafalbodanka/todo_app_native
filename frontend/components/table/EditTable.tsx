@@ -76,29 +76,20 @@ const EditTable = () => {
 		}
 	}, [newTableTitle])
 
-	const handleOnSave = () => {
-	// 	const taskToSend = {
-	// 		...task,
-	// 		responsibleUsers: task?.responsibleUsers.map(user => user._id)
-	// 	}
-		
-	// 	const updateTask = async () => {
-	// 		try {
-	// 			const response = await axios.patch(`${API_URL}/tasks/${task?._id}/update`,
-	// 				{
-	// 					task: taskToSend,
-	// 					currentTableId: currentTableId
-	// 				},
-	// 				{
-	// 					withCredentials: true,
-	// 				})
-	// 			dispatch(setCurrentTable(response.data.data))
-	// 		} catch (err) {
-	// 			console.log(err)
-	// 		}
-	// 	}
-	// 	updateTask();
-	// 	setIsChanged(false)
+	const handleOnSave = async () => {
+		try {
+			const response = await axios.post(`${API_URL}/tables/${currentTable._id}/name`,
+				{
+					newTitle: newTableTitle,
+				},
+				{
+					withCredentials: true,
+				})
+			dispatch(setCurrentTable(response.data.data))
+		} catch (err) {
+			console.log(err)
+		}
+		setIsTitleChanged(false)
 	}
 
 	const handleTitleChange = (newTitle: string) => {
