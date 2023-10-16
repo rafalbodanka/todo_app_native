@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { Text, View } from "../Themed";
 import Task from "../task/Task";
@@ -7,12 +7,19 @@ import AddTaskButton from "../task/AddTaskButton";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useAppDispatch } from "../../redux/hooks";
 import { toggleCompletedTasksVisibility } from "../../redux/currentTable";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useTheme } from "@react-navigation/native";
 import ColumnName from "./ColumnName";
+import { Ionicons } from "@expo/vector-icons";
+import Colors, { green, red } from "../../constants/Colors";
+import ReactNativeModal from "react-native-modal";
+import { Button } from "@rneui/base";
+import DeleteColumn from "./DeleteColumn";
 
-export default function Column({ column }: {column: ColumnType}) {
+export default function Column({ column }: { column: ColumnType }) {
 
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const dispatch = useAppDispatch()
   const theme = useTheme()
 
@@ -20,47 +27,52 @@ export default function Column({ column }: {column: ColumnType}) {
     dispatch(toggleCompletedTasksVisibility(column._id))
   }
 
+
   return (
-    <View className="flex flex-col pt-4 pb-24">
-      <ColumnName column={column}/>
-        <View className="flex flex-row pt-4 pb-16">
-          <View className="flex">
+    <TouchableWithoutFeedback className="flex flex-col pt-4 pb-24" onLongPress={() => setIsDeleteModalVisible(true)}>
+      <DeleteColumn
+      isDeleteModalVisible={isDeleteModalVisible}
+      setIsDeleteModalVisible={setIsDeleteModalVisible}
+      column={column}/>
+      <ColumnName column={column} />
+      <View className="flex flex-row pt-4 pb-16">
+        <View className="flex">
           <AddTaskButton></AddTaskButton>
           {column.pendingTasks?.length > 0 && <Text>Pending tasks</Text>}
-              {column.pendingTasks.map((task) => {
-                  return (
-                      <View key={task._id} className="pt-4">
-                          <Task task={task} column={column} taskArray="pendingTasks"></Task>
-                      </View>
-                  )
-              })}
-              {column.completedTasks &&
-              <View className="mt-8">
-                <TouchableOpacity onPress={toggleCompletedTaskVisibility}>
-                  <View className="flex flex-row items-center">
-                    <Text className="pr-2">Completed tasks
-                    </Text>
-                      <Icon
-                      size={16}
-                      color={theme.colors.text}
-                      name={column.showCompletedTasks ?
+          {column.pendingTasks.map((task) => {
+            return (
+              <View key={task._id} className="pt-4">
+                <Task task={task} column={column} taskArray="pendingTasks"></Task>
+              </View>
+            )
+          })}
+          {column.completedTasks &&
+            <View className="mt-8">
+              <TouchableOpacity onPress={toggleCompletedTaskVisibility}>
+                <View className="flex flex-row items-center">
+                  <Text className="pr-2">Completed tasks
+                  </Text>
+                  <Icon
+                    size={16}
+                    color={theme.colors.text}
+                    name={column.showCompletedTasks ?
                       'keyboard-arrow-down'
                       :
                       'keyboard-arrow-up'}>
-                      </Icon>
-                  </View>
-                </TouchableOpacity>
+                  </Icon>
+                </View>
+              </TouchableOpacity>
+            </View>
+          }
+          {column.showCompletedTasks && column.completedTasks.map((task) => {
+            return (
+              <View key={task._id} className="pt-4">
+                <Task task={task} column={column} taskArray="completedTasks"></Task>
               </View>
-              }
-              {column.showCompletedTasks && column.completedTasks.map((task) => {
-                  return (
-                      <View key={task._id} className="pt-4">
-                          <Task task={task} column={column} taskArray="completedTasks"></Task>
-                      </View>
-                  )
-              })}
-          </View>
+            )
+          })}
         </View>
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
