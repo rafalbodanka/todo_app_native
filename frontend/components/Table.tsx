@@ -22,7 +22,6 @@ export default function Table() {
 	const theme = useTheme()
 	const tables = useAppSelector(selectTables)
 	useFetchTables(setIsFetching)
-	console.log
 
 	return (
 		<>
@@ -41,6 +40,9 @@ export default function Table() {
 						}
 						centerComponent={
 							<TableHeader />
+						}
+						leftComponent={
+							<AddTable isInHeader={true}/>
 						}
 					>
 					</Header>
@@ -63,7 +65,7 @@ export default function Table() {
 						</View>
 					</ScrollView>
 					:
-					<AddTable />
+					<AddTable isInHeader={false}/>
 					}
 				</>
 				:

@@ -19,6 +19,7 @@ import DeleteTask from "../components/task/DeleteTask";
 import { ColorSchemeStore } from "nativewind/dist/style-sheet/color-scheme";
 import Colors from "../constants/Colors";
 import { ThemeConsumer } from "@rneui/themed";
+import DeleteTable from "../components/table/DeleteTable";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -128,7 +129,7 @@ function RootLayoutNav() {
             />
             <Stack.Screen name="edit-table" options={{
               headerTitle: "Edit table",
-              headerRight: () => <DeleteTask></DeleteTask>,
+              headerRight: () => <DeleteTable></DeleteTable>,
               presentation: "modal",
               }}
               initialParams={{ tableId: '' }}

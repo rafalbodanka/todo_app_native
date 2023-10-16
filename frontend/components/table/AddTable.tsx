@@ -5,13 +5,13 @@ import { View, Text } from "../Themed"
 import { Ionicons } from "@expo/vector-icons"
 import axios from "axios"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
-import { selectCurrentTable } from "../../redux/currentTable"
+import { selectCurrentTable, setColumns, setCurrentTable } from "../../redux/currentTable"
 import ReactNativeModal from "react-native-modal"
 import { Button, Input } from "@rneui/themed"
 import { useTheme } from "@react-navigation/native"
-import { selectTables } from "../../redux/tables"
+import { selectTables, setTables } from "../../redux/tables"
 
-const AddTable = () => {
+const AddTable = ({isInHeader} : {isInHeader: boolean}) => {
 	
     const API_URL = process.env.EXPO_PUBLIC_API_URL
     const currentTable = useAppSelector(selectCurrentTable)
@@ -23,17 +23,28 @@ const AddTable = () => {
 
     const handleAddTable = async () => {
         try {
-            const response = axios.post(`${API_URL}/tables/create`, 
+            const response = await axios.post(`${API_URL}/tables/create`, 
             {
                 title: newTableTitle,
             })
+            console.log(response.data.data)
+            dispatch(setTables(response.data.data))
+            dispatch(setCurrentTable(response.data.data[response.data.data.length - 1]))
+            console.log(response.data[response.data.length - 1])
         } catch(err) {
-
+            console.log(err)
         }
     }
 
     return (
         <>
+        {isInHeader ? 
+            <TouchableOpacity onPress={() => setIsAddNewTableModalOpen(true)}>
+                <View className="flex-row justify-center items-center p-2 pt-3" style={{backgroundColor: theme.colors.card}}>
+                    <Text>Add table</Text>
+                </View>
+            </TouchableOpacity>
+        :
             <View className={`${tables.length > 0 ? "w-36 justify-center items-center flex" : "w-screen h-full flex justify-center items-center" }`}>
                 <TouchableOpacity onPress={() => setIsAddNewTableModalOpen(true)}>
                     <View className="p-4 items-center gap-x-2">
@@ -42,6 +53,7 @@ const AddTable = () => {
                     </View>
                 </TouchableOpacity>
             </View>
+        }
             <ReactNativeModal
 				isVisible={isAddNewTableModalOpen}
 				onBackdropPress={() => setIsAddNewTableModalOpen(false)}
