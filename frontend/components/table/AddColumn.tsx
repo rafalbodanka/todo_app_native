@@ -5,7 +5,7 @@ import { View, Text } from "../Themed"
 import { Ionicons } from "@expo/vector-icons"
 import axios from "axios"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
-import { selectCurrentTable } from "../../redux/currentTable"
+import { selectCurrentTable, setCurrentTable } from "../../redux/currentTable"
 import ReactNativeModal from "react-native-modal"
 import { Button, Input } from "@rneui/themed"
 import { useTheme } from "@react-navigation/native"
@@ -23,11 +23,14 @@ const AddColumn = () => {
 
     const handleAddColumn = async () => {
         try {
-            const response = axios.post(`${API_URL}/columns/create`, 
+            const response = await axios.post(`${API_URL}/columns/create`, 
             {
                 title: newColumnTitle,
                 tableId: currentTable._id
             })
+            dispatch(setCurrentTable(response.data.data))
+            setIsAddNewColumnModalOpen(false)
+            setNewColumnTitle("")
         } catch(err) {
 
         }
