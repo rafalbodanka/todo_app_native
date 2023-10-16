@@ -21,9 +21,9 @@ export default function Column({ column }: {column: ColumnType}) {
   }
 
   return (
-    <View className="flex flex-col justify-center pt-4 pb-24">
+    <View className="flex flex-col pt-4 pb-24">
       <ColumnName column={column}/>
-        <View className="flex flex-row justify-center pt-4 pb-16">
+        <View className="flex flex-row pt-4 pb-16">
           <View className="flex">
           <AddTaskButton></AddTaskButton>
           {column.pendingTasks?.length > 0 && <Text>Pending tasks</Text>}

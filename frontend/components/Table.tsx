@@ -50,8 +50,8 @@ export default function Table() {
 					<ScrollView
 						horizontal
 					>
-						<View className={`flex flex-col justify-center ${tables.length > 0 && "pl-16"}`}>
-							<View className={`flex flex-row justify-center ${tables.length > 0 && "gap-8"}`}>
+						<View className={`flex flex-col ${tables.length > 0 && "pl-16"}`}>
+							<View className={`flex flex-row ${tables.length > 0 && "gap-8"}`}>
 								{table?.columns.map(column => {
 									return (
 										<ScrollView key={column._id} showsVerticalScrollIndicator={false}
