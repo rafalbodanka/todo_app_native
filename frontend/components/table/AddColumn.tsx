@@ -38,7 +38,7 @@ const AddColumn = () => {
 
     return (
         <>
-            <View className={`${tables.length > 0 ? "w-36 justify-center items-center flex" : "w-screen h-full flex justify-center items-center" }`}>
+            <View className={`justify-center h-screen items-center flex ${currentTable.columns.length > 0 ? "w-36" : "w-screen" }`}>
                 <TouchableOpacity onPress={() => setIsAddNewColumnModalOpen(true)}>
                     <View className="p-4 items-center gap-x-2">
                         <Ionicons name="add-circle-outline" size={24} color={green}></Ionicons>

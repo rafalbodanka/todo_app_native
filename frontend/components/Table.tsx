@@ -5,7 +5,7 @@ import { View } from "./Themed";
 import Column from "./column/Column";
 import useFetchTables from "./hooks/useFetchTables";
 import { useAppSelector } from "../redux/hooks";
-import { selectCurrentTable } from "../redux/currentTable";
+import currentTable, { selectCurrentTable } from "../redux/currentTable";
 import { Header } from "@rneui/themed";
 import { Link } from "expo-router";
 import { useTheme } from "@react-navigation/native";
@@ -17,7 +17,7 @@ import { selectTables } from "../redux/tables";
 import AddTable from "./table/AddTable";
 
 export default function Table() {
-	const table = useAppSelector(selectCurrentTable)
+	const currentTable = useAppSelector(selectCurrentTable)
 	const [isFetching, setIsFetching] = useState(true)
 	const theme = useTheme()
 	const tables = useAppSelector(selectTables)
@@ -50,9 +50,9 @@ export default function Table() {
 					<ScrollView
 						horizontal
 					>
-						<View className={`flex flex-col ${tables.length > 0 && "pl-16"}`}>
-							<View className={`flex flex-row ${tables.length > 0 && "gap-8"}`}>
-								{table?.columns.map(column => {
+						<View className={`flex flex-col ${currentTable.columns.length > 0 && "pl-16"}`}>
+							<View className={`flex flex-row ${currentTable.columns.length > 0 && "gap-8"}`}>
+								{currentTable?.columns.map(column => {
 									return (
 										<ScrollView key={column._id} showsVerticalScrollIndicator={false}
 										>
