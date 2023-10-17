@@ -1,7 +1,7 @@
 import { Button } from "@rneui/themed"
 import { useEffect, useState } from "react"
 import { ScrollView } from "react-native-gesture-handler"
-import { useAppSelector } from "../../redux/hooks"
+import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 import { selectUser } from "../../redux/user"
 import axios from "axios"
 import { router } from "expo-router"
@@ -12,10 +12,11 @@ import Colors, { green, red } from "../../constants/Colors"
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useTheme } from "@react-navigation/native"
 import Loader from "../Loader"
+import { setTables } from "../../redux/tables"
+import { setCurrentTable } from "../../redux/currentTable"
 
 const Invitations = () => {
 
-	const userId = useAppSelector(selectUser)._id
 	const [isLoading, setIsLoading] = useState(true)
 	const API_URL = process.env.EXPO_PUBLIC_API_URL
 	const [sentInvitations, setSentInvitations] = useState<Invitation[]>()
@@ -24,7 +25,7 @@ const Invitations = () => {
 	const [isSentInvitationsOpen, setIsSentInvitationsOpen] = useState(true)
 	const currentUserId = useAppSelector(selectUser)._id
 	const theme = useTheme()
-
+	const dispatch = useAppDispatch()
 	// fetch invitations
 	useEffect(() => {
 		const getSentInvitations = async () => {
@@ -66,7 +67,10 @@ const Invitations = () => {
 			{
 				userId: currentUserId
 			})
-			setReceivedInvitations(response.data.data)
+			const data = response.data.data
+			setReceivedInvitations(data.receivedInvitations)
+			dispatch(setTables(data.userTables))
+			dispatch(setCurrentTable(data.userTables[data.userTables.length - 1]))
 		} catch (err) {
 		}
 	}
