@@ -31,7 +31,6 @@ const DeleteTask = () => {
             dispatch(setCurrentTable(response.data.data))
             router.back()
         } catch (err) {
-            console.log(err)
         }
     }
 

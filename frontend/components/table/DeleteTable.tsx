@@ -28,7 +28,6 @@ const DeleteTable = () => {
                     "Content-Type": "application/json",
                 },
             })
-            console.log(response.data)
             dispatch(setTables(response.data.data))
             response.data.data.length > 0 ?
             dispatch(setCurrentTable(response.data.data.length[0]))
@@ -41,7 +40,6 @@ const DeleteTable = () => {
             }))
             router.replace('/')
         } catch (err) {
-            console.log(err)
         }
     }
 

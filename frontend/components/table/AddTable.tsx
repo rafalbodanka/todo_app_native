@@ -30,7 +30,6 @@ const AddTable = ({isInHeader} : {isInHeader: boolean}) => {
             dispatch(setTables(response.data.data))
             dispatch(setCurrentTable(response.data.data[response.data.data.length - 1]))
         } catch(err) {
-            console.log(err)
         }
     }
 

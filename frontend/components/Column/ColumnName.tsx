@@ -26,7 +26,6 @@ const ColumnName = ({ column }: { column: ColumnType }) => {
 				withCredentials: true
 			})
 		} catch (err) {
-			console.log(err)
 		}
 	}
 

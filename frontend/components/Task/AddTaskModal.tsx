@@ -41,7 +41,6 @@ export default function AddTaskModal() {
                 router.back()
             }
         } catch (err) {
-            console.log(err)
         }
     }
 

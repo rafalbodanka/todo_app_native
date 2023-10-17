@@ -60,7 +60,6 @@ const EditTable = () => {
 				);
 				setTableMembers(response.data.data)
 			} catch (err) {
-				console.log(err)
 			} finally {
 			}
 		}
@@ -87,7 +86,6 @@ const EditTable = () => {
 				})
 			dispatch(setCurrentTable(response.data.data))
 		} catch (err) {
-			console.log(err)
 		}
 		setIsTitleChanged(false)
 	}

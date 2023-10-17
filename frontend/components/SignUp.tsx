@@ -131,7 +131,6 @@ export default function SignUp() {
         setIsRegisteredSuccesfully(true);
       }
     } catch (err: any) {
-        console.log(err)
     }
   };
 

@@ -68,7 +68,6 @@ const Invitations = () => {
 			})
 			setReceivedInvitations(response.data.data)
 		} catch (err) {
-			console.log(err)
 		}
 	}
 	//cancel/reject sent invitation
@@ -81,14 +80,12 @@ const Invitations = () => {
 			{
 				withCredentials: true,
 			})
-			console.log(response)
 			if (type === 'cancel') {
 				setSentInvitations(response.data.data)
 			} else {
 				setReceivedInvitations(response.data.data)
 			}
 		} catch (err) {
-			console.log(err)
 		}
 	}
 
