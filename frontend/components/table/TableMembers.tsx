@@ -29,6 +29,7 @@ const TableMembers = ({
 		.find(member => member.user._id === currentUser._id)?.permission || 'none';
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 	const [memberToDelete, setMemberToDelete] = useState<User | null>()
+
 	const handleDeleteMember = async (userId: string) => {
 		try {
 			const response = await axios.post(`${API_URL}/tables/${tableId}/remove-member`,
@@ -36,6 +37,7 @@ const TableMembers = ({
 					memberId: userId,
 				})
 			setTableMembers(response.data.data)
+			closeDeleteModal()
 		} catch (err) {
 		}
 	}
