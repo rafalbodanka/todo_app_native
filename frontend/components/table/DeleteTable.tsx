@@ -39,7 +39,7 @@ const DeleteTable = () => {
                 __v: 0,
                 _id: "",
             }))
-            router.back()
+            router.replace('/')
         } catch (err) {
             console.log(err)
         }
