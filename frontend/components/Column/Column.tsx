@@ -29,21 +29,19 @@ export default function Column({ column }: { column: ColumnType }) {
 
 
   return (
-    <TouchableWithoutFeedback className="flex flex-col pt-4 pb-24" onLongPress={() => setIsDeleteModalVisible(true)}>
+    <TouchableWithoutFeedback className="pt-4 pb-8 h-full" onLongPress={() => setIsDeleteModalVisible(true)}>
       <DeleteColumn
       isDeleteModalVisible={isDeleteModalVisible}
       setIsDeleteModalVisible={setIsDeleteModalVisible}
       column={column}/>
       <ColumnName column={column} />
-      <View className="flex flex-row pt-4 pb-16">
-        <View className="flex">
+      <View className="flex flex-row">
+        <View>
           <AddTaskButton></AddTaskButton>
           {column.pendingTasks?.length > 0 && <Text>Pending tasks</Text>}
           {column.pendingTasks.map((task) => {
             return (
-              <View key={task._id} className="pt-4">
-                <Task task={task} column={column} taskArray="pendingTasks"></Task>
-              </View>
+                <Task key={task._id} task={task} column={column} taskArray="pendingTasks"></Task>
             )
           })}
           {column.completedTasks &&

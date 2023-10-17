@@ -15,6 +15,7 @@ import Loader from "./Loader";
 import AddColumn from "./table/AddColumn";
 import { selectTables } from "../redux/tables";
 import AddTable from "./table/AddTable";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Table() {
 	const currentTable = useAppSelector(selectCurrentTable)
@@ -47,23 +48,26 @@ export default function Table() {
 					>
 					</Header>
 					{tables.length > 0 ?
-					<ScrollView
-						horizontal
-					>
-						<View className={`flex flex-col ${currentTable.columns.length > 0 && "pl-16"}`}>
-							<View className={`flex flex-row ${currentTable.columns.length > 0 && "gap-8"}`}>
-								{currentTable?.columns.map(column => {
-									return (
-										<ScrollView key={column._id} showsVerticalScrollIndicator={false}
-										>
-											<Column column={column}></Column>
-										</ScrollView>
-									)
-								})}
-								<AddColumn />
+					<GestureHandlerRootView className="flex-1">
+						<ScrollView
+							className="flex-1"
+							horizontal
+						>
+							<View className={`flex flex-col flex-1 ${currentTable.columns.length > 0 && "pl-16"}`}>
+								<View className={`flex flex-row flex-1 ${currentTable.columns.length > 0 && "gap-x-8"}`}>
+									{currentTable?.columns.map(column => {
+										return (
+											<ScrollView key={column._id} showsVerticalScrollIndicator={false}
+											>
+												<Column column={column}></Column>
+											</ScrollView>
+										)
+									})}
+									<AddColumn />
+								</View>
 							</View>
-						</View>
-					</ScrollView>
+						</ScrollView>
+					</GestureHandlerRootView>
 					:
 					<AddTable isInHeader={false}/>
 					}
