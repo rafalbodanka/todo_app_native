@@ -18,7 +18,6 @@
     "@reduxjs/toolkit": "^1.9.6",
     "@rneui/base": "github:react-native-elements/react-native-elements#base",
     "@rneui/themed": "github:react-native-elements/react-native-elements#themed",
-    "@types/react-native-snap-carousel": "^3.8.6",
     "axios": "^1.5.1",
     "date-fns": "^2.30.0",
     "expo": "~49.0.12",
