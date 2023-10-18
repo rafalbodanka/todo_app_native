@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { Platform } from "react-native"
 import { View } from "../components/Themed";
 import { Button } from "@rneui/themed";
+import { useTheme } from "@react-navigation/native";
 
 const Unauth = () => {
 

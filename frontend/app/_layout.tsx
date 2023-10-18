@@ -3,6 +3,7 @@ import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
+  useTheme,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Link, SplashScreen, Stack } from "expo-router";
@@ -14,6 +15,11 @@ import ModalHeader from "../components/ModalHeader";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useAppSelector } from "../redux/hooks";
 import { selectAuth } from "../redux/auth";
+import DeleteTask from "../components/task/DeleteTask";
+import { ColorSchemeStore } from "nativewind/dist/style-sheet/color-scheme";
+import Colors from "../constants/Colors";
+import { ThemeConsumer } from "@rneui/themed";
+import DeleteTable from "../components/table/DeleteTable";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -52,21 +58,44 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 
+const CustomDefaultTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    transparent: 'transparent',
+  },
+}
+
+const CustomDarkTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    transparent: 'transparent',
+  },
+}
+
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-          <Stack>
+        <ThemeProvider value={colorScheme === "dark" ? CustomDarkTheme : CustomDefaultTheme}>
+          <Stack screenOptions={{
+              navigationBarColor:
+              colorScheme === "dark" ?
+              CustomDarkTheme.colors.transparent
+              : CustomDefaultTheme.colors.transparent,
+              statusBarHidden: false,
+            statusBarColor: Colors.deepPurple.background,
+            }}>
             <Stack.Screen name="unauth" options={{
               headerTitle: "Sign up",
-              headerTitleAlign: "center"
-            }} />
+              headerTitleAlign: "center",
+            }}/>
             <Stack.Screen name="login" options={{
               presentation: "modal",
-              headerTitle: "Log in"
+              headerTitle: "Log in",
               }} />
             <Stack.Screen name="signup" options={{
               presentation: "modal",
@@ -93,9 +122,22 @@ function RootLayoutNav() {
             }} />
             <Stack.Screen name="edit-task" options={{
               headerTitle: "Edit task",
+              headerRight: () => <DeleteTask></DeleteTask>,
               presentation: "modal",
               }}
               initialParams={{ taskId: '' }}
+            />
+            <Stack.Screen name="edit-table" options={{
+              headerTitle: "Edit table",
+              headerRight: () => <DeleteTable></DeleteTable>,
+              presentation: "modal",
+              }}
+              initialParams={{ tableId: '' }}
+            />
+            <Stack.Screen name="invitations" options={{
+              headerTitle: "Invitations",
+              presentation: "modal",
+              }}
             />
           </Stack>
       </ThemeProvider>

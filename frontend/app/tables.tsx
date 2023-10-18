@@ -7,11 +7,11 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { selectTables } from "../redux/tables";
 import { setCurrentTable } from "../redux/currentTable";
 import { useNavigation } from '@react-navigation/native';
-import useFetchTables from "../components/hooks/useFetchTables";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { router } from "expo-router";
 
 export default function ModalScreen() {
 
-  useFetchTables()
 
   const tables = useAppSelector(selectTables)
     const dispatch = useAppDispatch()
@@ -22,6 +22,10 @@ export default function ModalScreen() {
         navigation.goBack();
     }
 
+    const handleLongPress = (tableId: string) => {
+      router.push({ pathname: `/edit-table/`, params: { tableId: tableId } })
+  }
+
     const closeModal = () => {
       navigation.goBack();
     }
@@ -30,24 +34,25 @@ export default function ModalScreen() {
       <View className="flex-1 flex-col">
         {tables.map(table => {
             return (
-            <View>
+            <View key={table._id}>
                 <View
                     style={styles.separator}
                     className=""
                     lightColor="#eee"
                     darkColor="rgba(255,255,255,0.1)"
                     />
-                    <TouchableHighlight onPress={() => setNewCurrentTable(table)}>
+                    <TouchableOpacity
+                    onPress={() => setNewCurrentTable(table)}
+                    onLongPress={() => handleLongPress(table._id)}
+                    >
                         <Text
                         style={styles.title}
                         className="text-center"
                         >{table.title}</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
             )
         })}
-        {/* Use a light status bar on iOS to account for the black space above the modal */}
-        <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
         </View>
     </View>
   );
@@ -57,9 +62,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    paddingVertical: 30,
   },
   separator: {
-    marginVertical: 30,
     height: 2,
     width: "100%",
   },

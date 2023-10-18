@@ -86,24 +86,23 @@ export default function Login() {
               { withCredentials: true }
             );
             if (response.status === 200) {
-            dispatch(setIsLoggedIn(true))
             const receivedCookie = response.headers['set-cookie']
             if (!receivedCookie) throw Error
             const [cookieName, cookieValue] = receivedCookie.toString().split(';')[0].split('=');
               try {
                 await AsyncStorage.setItem(cookieName, cookieValue);
               } catch (e) {
-                console.log(e)
               }
-              router.back()
+              router.replace('/')
             }
         } catch (err) {
-            console.log(err)
+          setInvalidPasswordMessage("Invalid credentials.")
+          setIsPasswordValid(false)
         }
     }
 
     return (
-        <SafeAreaView>
+        <SafeAreaView className='h-full' style={{backgroundColor: theme.colors.background}}>
             <View className="flex justify-center items-center w-full mt-20">
                 <View className="w-3/5">
                 <Input placeholder='Email'

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { View, Text } from "./Themed"
+import { View, Text } from "../Themed"
 import { TouchableHighlight, Animated, Easing  } from "react-native"
 import { Link } from "expo-router";
 import { useTheme } from "@react-navigation/native";

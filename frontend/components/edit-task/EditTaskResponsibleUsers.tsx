@@ -4,8 +4,8 @@ import { useTheme } from "@react-navigation/native"
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import SelectDropdown from "react-native-select-dropdown";
-import { selectCurrentTable } from "../../redux/currentTable";
-import { useAppSelector } from "../../redux/hooks";
+import { almostBlack, } from "../../constants/Colors";
+
 const EditTaskResponsibleUsers = (
 	{ responsibleUsers, task, setTask }:
 		{
@@ -40,8 +40,8 @@ const EditTaskResponsibleUsers = (
 						height: "auto",
 						}}
 					renderCustomizedButtonChild={() =>
-						<TouchableOpacity className="flex ml-4 flex-row items-center">
-						<Ionicons name="person-add" size={18}></Ionicons>
+						<TouchableOpacity className="flex ml-4 flex-row items-center" containerStyle={{backgroundColor: theme.colors.background}}>
+						<Ionicons name="person-add" size={18} color={theme.colors.text}></Ionicons>
 						<Text className="ml-2">Assign</Text>
 					</TouchableOpacity>
 					}
@@ -62,7 +62,7 @@ const EditTaskResponsibleUsers = (
 							return (
 								<View key={user._id}
 									className="flex mt-4 flex-row justify-between w-full items-center bg-neutral-200 p-2 px-4 rounded-lg">
-									<Text style={{ color: theme.colors.text, fontSize: 20 }}>{user.email}</Text>
+									<Text style={{ color: almostBlack, fontSize: 20 }}>{user.email}</Text>
 									<View className="bg-neutral-200">
 										<TouchableOpacity onPress={() => handleUserDelete(user._id)}>
 											<Ionicons name="person-remove" size={24}></Ionicons>

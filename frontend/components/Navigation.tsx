@@ -4,6 +4,7 @@ import { Platform, StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
 import { Link } from "expo-router";
 import Logout from "./Logout";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Navigation = () => {
 
@@ -14,28 +15,31 @@ const Navigation = () => {
             <View>
               <View
                 style={styles.separator}
-                className=" flex flex-row justify-center"
                 lightColor="#eee"
                 darkColor="rgba(255,255,255,0.1)"
               />
-              <Text
-              style={styles.title}
-              className="text-center"
-              >Invitations</Text>
+              <TouchableOpacity>
+                <Link href="/invitations" className="text-center py-8">
+                  <Text
+                  style={styles.title}
+                  >Invitations</Text>
+                </Link>
+              </TouchableOpacity>
             </View>
             <View>
               <View
                 style={styles.separator}
-                className=""
                 lightColor="#eee"
                 darkColor="rgba(255,255,255,0.1)"
               />
-              <Link href="/user-settings" className="text-center">
-                <Text
-                style={styles.title}
-                >User settings</Text>
-              </Link>
-              </View>
+              <TouchableOpacity>
+                <Link href="/user-settings" className="text-center py-8">
+                  <Text
+                  style={styles.title}
+                  >User settings</Text>
+                </Link>
+              </TouchableOpacity>
+            </View>
             <View>
               <View
                 style={styles.separator}
@@ -47,8 +51,6 @@ const Navigation = () => {
             </View>
           </View>
         </View>
-        {/* Use a light status bar on iOS to account for the black space above the modal */}
-        <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
       </View>
     )
 }
@@ -59,7 +61,6 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
     },
     separator: {
-      marginVertical: 30,
       height: 2,
       width: "100%",
     },
