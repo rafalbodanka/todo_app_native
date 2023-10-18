@@ -62,11 +62,11 @@ Manage the table invitations.
 
 ## Configuration
 
-# Backend 
+### Backend 
 
 Checkout To do app configuration section [here](https://github.com/rafalbodanka/todo_app#configuration).
 
-# Frontend
+### Frontend
 
 In frontend folder, create and open the .env file and add the environment variable in the following format:
 
