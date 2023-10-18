@@ -11,8 +11,8 @@ import { Link, router, useNavigation } from "expo-router";
 import Draggable from "../drag&drop/Draggable";
 
 export default function Task({
-	task, column, taskArray, handleScroll }:
-	{ task: TaskType; column: ColumnType, taskArray: string, handleScroll: (x: number, y: number) => void }) {
+	task, column, taskArray }:
+	{ task: TaskType; column: ColumnType, taskArray: string }) {
 	const theme = useTheme()
 	const dispatch = useAppDispatch()
 	const handleChangeTaskStatus = () => {
@@ -31,8 +31,8 @@ export default function Task({
 			{ text: "Hard", color: "#e64747" }
 
   return (
-		<Draggable handleScroll={handleScroll}>
-	<TouchableHighlight onPress={() => {router.push({ pathname: `/edit-task/`, params: { taskId: task._id } })}}>
+	<Draggable task={task}>
+		<TouchableHighlight onPress={() => {router.push({ pathname: `/edit-task/`, params: { taskId: task._id } })}}>
 			<View className={`relative flex border-[1px] rounded-md p-1`} style={{ borderColor: theme.colors.text }}>
 					<View className="w-64">
 						<View className="flex flex-row items-start">

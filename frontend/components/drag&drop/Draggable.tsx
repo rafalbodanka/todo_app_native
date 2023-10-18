@@ -1,20 +1,25 @@
-import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue } from "react-native-reanimated"
+import { useState } from "react" 
+import Animated, { useAnimatedGestureHandler, useAnimatedReaction, useAnimatedStyle, useDerivedValue, useSharedValue } from "react-native-reanimated"
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from "react-native-gesture-handler"
 import { ReactNode, useEffect } from "react"
 import { Dimensions, ScrollView } from "react-native";
+import { useAppDispatch } from "../../redux/hooks";
+import { setDraggedTaskIndex } from "../../redux/currentColumn";
+import { TaskType } from "../../types/Types";
 
 type Props = {
     children: ReactNode,
-    handleScroll: (x: number, y: number) => void
+    task: TaskType,
     }
 
-  const Draggable = ({ children, handleScroll }: Props) => {
+  const Draggable = ({ children, task }: Props) => {
 
 	const width = Dimensions.get('window').width;
-    console.log(width)
+    const dispatch = useAppDispatch()
     // carouselRef.scrollTo({animated: true, index: currentIndex + 1})
     const translateX = useSharedValue(0);
     const translateY = useSharedValue(0);
+    const draggedTaskIndex = useSharedValue("")
     const isGestureActive = useSharedValue(false)
     const panGesture = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
@@ -23,6 +28,8 @@ type Props = {
         onStart: (_, context) => {
             context.startX = translateX.value;
             context.startY = translateY.value;
+            draggedTaskIndex.value = task._id
+            
         },
         onActive: (event, context) => {
             translateX.value = context.startX + event.translationX;
@@ -32,8 +39,7 @@ type Props = {
 
             try {
                 if (isGestureActive.value && translateX.value > width / 2) {
-                    handleScroll(600, 0); // Adjust the parameters as needed
-                    isGestureActive.value = false;
+                    console.log('elo')
                 }
               } catch (error) {
                 console.error("Error in scrollTo:", error);
@@ -46,10 +52,8 @@ type Props = {
 
     const animatedStyle = useAnimatedStyle(() => {
         const zIndex = isGestureActive.value ? 1000 : 1;
-        const position = isGestureActive.value ? 'fixed' : 'relative'
         return {
             zIndex,
-            position,
             transform: [
                 {translateX: translateX.value},
                 {translateY: translateY.value}

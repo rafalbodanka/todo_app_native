@@ -17,7 +17,7 @@ import ReactNativeModal from "react-native-modal";
 import { Button } from "@rneui/base";
 import DeleteColumn from "./DeleteColumn";
 
-const Column = ({ column, handleScroll }: { column: ColumnType; handleScroll: (x: number, y: number) => void }) => {
+const Column = ({ column }: { column: ColumnType }) => {
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const dispatch = useAppDispatch()
@@ -26,7 +26,6 @@ const Column = ({ column, handleScroll }: { column: ColumnType; handleScroll: (x
   const toggleCompletedTaskVisibility = () => {
     dispatch(toggleCompletedTasksVisibility(column._id))
   }
-  console
   return (
     <TouchableWithoutFeedback className="pt-4 pb-8 h-full items-center" onLongPress={() => setIsDeleteModalVisible(true)}>
       <DeleteColumn
@@ -40,16 +39,15 @@ const Column = ({ column, handleScroll }: { column: ColumnType; handleScroll: (x
           {column.pendingTasks?.length > 0 && <Text>Pending tasks</Text>}
           {column.pendingTasks.map((task) => {
             return (
-              <View key={task._id} className="pt-4">
+              <View key={task._id} className="pt-4 z-10">
                 <Task
-                handleScroll={handleScroll}
                 task={task} column={column}
                 taskArray="pendingTasks"></Task>
               </View>
             )
           })}
           {column.completedTasks &&
-            <View className="mt-8">
+            <View className="mt-8 z-0">
               <TouchableOpacity onPress={toggleCompletedTaskVisibility}>
                 <View className="flex flex-row items-center">
                   <Text className="pr-2">Completed tasks
@@ -68,11 +66,12 @@ const Column = ({ column, handleScroll }: { column: ColumnType; handleScroll: (x
           }
           {column.showCompletedTasks && column.completedTasks.map((task) => {
             return (
+              <View key={task._id} className="pt-4 ">
                 <Task
-                handleScroll={handleScroll}
                 key={task._id} 
                 task={task} column={column}
                 taskArray="completedTasks"></Task>
+              </View>
             )
           })}
         </View>

@@ -19,6 +19,7 @@ import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import { Dimensions, TouchableOpacity } from "react-native";
 import { selectCurretColumnIndex, setCurrentColumnIndex } from "../redux/currentColumn";
 import { ColumnType } from "../types/Types";
+import Carousel from "react-native-reanimated-carousel";
 
 export default function Table() {
 	const width = Dimensions.get('window').width;
@@ -63,17 +64,20 @@ export default function Table() {
 						ref={scrollRef}
 						horizontal
 					>
-						<View className={`flex flex-col ${currentTable.columns.length > 0 && "pl-16"}`}>
-							<View className={`flex flex-row ${currentTable.columns.length > 0 && "gap-8"}`}>
-								{currentTable?.columns.map(column => {
-									return (
-										<ScrollView key={column._id} showsVerticalScrollIndicator={false}
-										>
-											<TouchableOpacity onPress={() => handleScroll(600, 0)}><Text>next</Text></TouchableOpacity>
-											<Column column={column} handleScroll={handleScroll}></Column>
-										</ScrollView>
-									)
-								})}
+						<View className={'flex flex-col'}>
+							<View className={'flex flex-row'}>
+								<Carousel
+								data={currentTable.columns}
+								loop={false}
+								width={width}
+								scrollAnimationDuration={1000}
+								renderItem={({index}) => (
+									<ScrollView key={index} showsVerticalScrollIndicator={false}
+									>
+										<Column column={currentTable.columns[index]}></Column>
+									</ScrollView>
+								)}
+								/>
 								<AddColumn />
 							</View>
 						</View>
@@ -88,20 +92,3 @@ export default function Table() {
 		</>
 	);
 }
-
-								// <Carousel
-								// 	ref={carouselRef}
-								// 	loop={false}
-								// 	width={width}
-								// 	snapEnabled={true}
-								// 	data={currentTable.columns}
-								// 	scrollAnimationDuration={1000}
-								// 	pagingEnabled
-								// 	onScrollEnd={(index) => dispatch(setCurrentColumnIndex(index))}
-								// 	renderItem={({ index }) => (
-								// 		<ScrollView key={index} showsVerticalScrollIndicator={false}
-								// 			>
-								// 			<Column column={currentTable.columns[index]} carouselRef={carouselRef.current as ICarouselInstance}></Column>
-								// 		</ScrollView>
-								// 	)}
-								// />}
