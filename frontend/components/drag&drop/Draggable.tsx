@@ -1,15 +1,20 @@
 import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue } from "react-native-reanimated"
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from "react-native-gesture-handler"
+import { ReactNode, useEffect } from "react"
+import { Dimensions, ScrollView } from "react-native";
 
 type Props = {
-    children: string | JSX.Element | JSX.Element[]
-  }
+    children: ReactNode,
+    handleScroll: (x: number, y: number) => void
+    }
 
-const Draggable = ({ children }: Props) => {
+  const Draggable = ({ children, handleScroll }: Props) => {
 
+	const width = Dimensions.get('window').width;
+    console.log(width)
+    // carouselRef.scrollTo({animated: true, index: currentIndex + 1})
     const translateX = useSharedValue(0);
     const translateY = useSharedValue(0);
-    
     const isGestureActive = useSharedValue(false)
     const panGesture = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
@@ -24,6 +29,15 @@ const Draggable = ({ children }: Props) => {
             translateY.value = context.startY + event.translationY;
             console.log('x:', translateX.value, 'y:', translateY.value)
             isGestureActive.value = true;
+
+            try {
+                if (isGestureActive.value && translateX.value > width / 2) {
+                    handleScroll(600, 0); // Adjust the parameters as needed
+                    isGestureActive.value = false;
+                }
+              } catch (error) {
+                console.error("Error in scrollTo:", error);
+              }
         },
         onFinish: () => {
             isGestureActive.value = false
