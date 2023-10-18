@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ScrollView, ActivityIndicator } from "react-native";
 import { View } from "./Themed";
 import Column from "./column/Column";
 import useFetchTables from "./hooks/useFetchTables";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import currentTable, { selectCurrentTable } from "../redux/currentTable";
-import { Header } from "@rneui/themed";
+import { Header, Text } from "@rneui/themed";
 import { Link } from "expo-router";
 import { useTheme } from "@react-navigation/native";
 import Colors from "../constants/Colors";
@@ -15,14 +15,24 @@ import Loader from "./Loader";
 import AddColumn from "./table/AddColumn";
 import { selectTables } from "../redux/tables";
 import AddTable from "./table/AddTable";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
+import Carousel, { CarouselRenderItem } from 'react-native-reanimated-carousel';
+import { Dimensions, TouchableOpacity } from "react-native";
+import { selectCurretColumnIndex, setCurrentColumnIndex } from "../redux/currentColumn";
+import { ColumnType } from "../types/Types";
+import type { ICarouselInstance } from 'react-native-reanimated-carousel'; 
 
 export default function Table() {
+	const width = Dimensions.get('window').width;
+
 	const currentTable = useAppSelector(selectCurrentTable)
 	const [isFetching, setIsFetching] = useState(true)
 	const theme = useTheme()
 	const tables = useAppSelector(selectTables)
 	useFetchTables(setIsFetching)
+	const carouselRef = useRef<ICarouselInstance>(null)
+	console.log(carouselRef.current?.getCurrentIndex())
+	const dispatch = useAppDispatch()
 
 	return (
 		<>
@@ -53,18 +63,18 @@ export default function Table() {
 							className="flex-1"
 							horizontal
 						>
-							<View className={`flex flex-col flex-1 ${currentTable.columns.length > 0 && "pl-16"}`}>
-								<View className={`flex flex-row flex-1 ${currentTable.columns.length > 0 && "gap-x-8"}`}>
-									{currentTable?.columns.map(column => {
+							<View className={'flex flex-col flex-1'}>
+								{currentTable.columns.length > 0 &&
+									currentTable.columns.map(column => {
 										return (
-											<ScrollView key={column._id} showsVerticalScrollIndicator={false}
+										<ScrollView key={column._id} showsVerticalScrollIndicator={false}
 											>
-												<Column column={column}></Column>
-											</ScrollView>
-										)
-									})}
-									<AddColumn />
-								</View>
+											<Column column={column}></Column>
+										</ScrollView>
+									)
+								})
+								}
+								<AddColumn />
 							</View>
 						</ScrollView>
 					</GestureHandlerRootView>
@@ -78,3 +88,20 @@ export default function Table() {
 		</>
 	);
 }
+
+								// <Carousel
+								// 	ref={carouselRef}
+								// 	loop={false}
+								// 	width={width}
+								// 	snapEnabled={true}
+								// 	data={currentTable.columns}
+								// 	scrollAnimationDuration={1000}
+								// 	pagingEnabled
+								// 	onScrollEnd={(index) => dispatch(setCurrentColumnIndex(index))}
+								// 	renderItem={({ index }) => (
+								// 		<ScrollView key={index} showsVerticalScrollIndicator={false}
+								// 			>
+								// 			<Column column={currentTable.columns[index]} carouselRef={carouselRef.current as ICarouselInstance}></Column>
+								// 		</ScrollView>
+								// 	)}
+								// />}

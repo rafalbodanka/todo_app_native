@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef, ForwardedRef } from "react";
 import { StyleSheet } from "react-native";
 import { Text, View } from "../Themed";
 import Task from "../task/Task";
@@ -16,8 +16,9 @@ import Colors, { green, red } from "../../constants/Colors";
 import ReactNativeModal from "react-native-modal";
 import { Button } from "@rneui/base";
 import DeleteColumn from "./DeleteColumn";
+import type { ICarouselInstance } from 'react-native-reanimated-carousel'; 
 
-export default function Column({ column }: { column: ColumnType }) {
+const Column = ({ column }: { column: ColumnType }) => {
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const dispatch = useAppDispatch()
@@ -27,9 +28,8 @@ export default function Column({ column }: { column: ColumnType }) {
     dispatch(toggleCompletedTasksVisibility(column._id))
   }
 
-
   return (
-    <TouchableWithoutFeedback className="pt-4 pb-8 h-full" onLongPress={() => setIsDeleteModalVisible(true)}>
+    <TouchableWithoutFeedback className="pt-4 pb-8 h-full items-center" onLongPress={() => setIsDeleteModalVisible(true)}>
       <DeleteColumn
       isDeleteModalVisible={isDeleteModalVisible}
       setIsDeleteModalVisible={setIsDeleteModalVisible}
@@ -41,7 +41,9 @@ export default function Column({ column }: { column: ColumnType }) {
           {column.pendingTasks?.length > 0 && <Text>Pending tasks</Text>}
           {column.pendingTasks.map((task) => {
             return (
-                <Task key={task._id} task={task} column={column} taskArray="pendingTasks"></Task>
+                <Task
+                key={task._id} task={task} column={column}
+                taskArray="pendingTasks"></Task>
             )
           })}
           {column.completedTasks &&
@@ -64,9 +66,10 @@ export default function Column({ column }: { column: ColumnType }) {
           }
           {column.showCompletedTasks && column.completedTasks.map((task) => {
             return (
-              <View key={task._id} className="pt-4">
-                <Task task={task} column={column} taskArray="completedTasks"></Task>
-              </View>
+                <Task
+                key={task._id} 
+                task={task} column={column}
+                taskArray="completedTasks"></Task>
             )
           })}
         </View>
@@ -74,3 +77,5 @@ export default function Column({ column }: { column: ColumnType }) {
     </TouchableWithoutFeedback>
   );
 }
+
+export default Column;
