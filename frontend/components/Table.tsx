@@ -58,26 +58,23 @@ export default function Table() {
 					>
 					</Header>
 					{tables.length > 0 ?
-					<GestureHandlerRootView className="flex-1">
-						<ScrollView
-							className="flex-1"
-							horizontal
-						>
-							<View className={'flex flex-col flex-1'}>
-								{currentTable.columns.length > 0 &&
-									currentTable.columns.map(column => {
-										return (
+					<ScrollView
+						horizontal
+					>
+						<View className={`flex flex-col ${currentTable.columns.length > 0 && "pl-16"}`}>
+							<View className={`flex flex-row ${currentTable.columns.length > 0 && "gap-8"}`}>
+								{currentTable?.columns.map(column => {
+									return (
 										<ScrollView key={column._id} showsVerticalScrollIndicator={false}
-											>
+										>
 											<Column column={column}></Column>
 										</ScrollView>
 									)
-								})
-								}
+								})}
 								<AddColumn />
 							</View>
-						</ScrollView>
-					</GestureHandlerRootView>
+						</View>
+					</ScrollView>
 					:
 					<AddTable isInHeader={false}/>
 					}

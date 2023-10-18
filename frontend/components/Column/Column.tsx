@@ -35,15 +35,15 @@ const Column = ({ column }: { column: ColumnType }) => {
       setIsDeleteModalVisible={setIsDeleteModalVisible}
       column={column}/>
       <ColumnName column={column} />
-      <View className="flex flex-row">
-        <View>
+      <View className="flex flex-row pt-4 pb-16">
+        <View className="flex">
           <AddTaskButton></AddTaskButton>
           {column.pendingTasks?.length > 0 && <Text>Pending tasks</Text>}
           {column.pendingTasks.map((task) => {
             return (
-                <Task
-                key={task._id} task={task} column={column}
-                taskArray="pendingTasks"></Task>
+              <View key={task._id} className="pt-4">
+                <Task task={task} column={column} taskArray="pendingTasks"></Task>
+              </View>
             )
           })}
           {column.completedTasks &&

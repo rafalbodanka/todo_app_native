@@ -8,9 +8,6 @@ import { useAppDispatch } from "../../redux/hooks";
 import { changeTaskStatus } from "../../redux/currentTable";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { Link, router, useNavigation } from "expo-router";
-import Draggable from "../drag&drop/Draggable";
-import { ICarouselInstance } from "react-native-reanimated-carousel";
-import { Dimensions } from "react-native";
 
 export default function Task({
 	task, column, taskArray }:
@@ -32,45 +29,41 @@ export default function Task({
 			{ text: "Medium", color: "#e09c3b" } :
 			{ text: "Hard", color: "#e64747" }
 
-	return (
-		<View className="mt-8">
-			<Draggable>
-				<TouchableHighlight onPress={() => { router.push({ pathname: `/edit-task/`, params: { taskId: task._id } }) }}>
-					<View className={`relative flex border-[1px] rounded-md p-1`} style={{ borderColor: theme.colors.text }}>
-						<View className="w-64">
-							<View className="flex flex-row items-start">
-								<View className="flex justify-start h-full">
-									<BouncyCheckbox
-										size={24}
-										fillColor="purple"
-										unfillColor="#FFFFFF"
-										text="Custom Checkbox"
-										innerIconStyle={{ borderWidth: 2 }}
-										isChecked={task.completed}
-										onPress={handleChangeTaskStatus}
-										textComponent={<></>}
-										className="p-4"
-									/>
-								</View>
-								<Text className={`p-3 pl-0 w-48 text-lg ${task.completed ? 'line-through text-gray-400' : 'no-underline'}`}
-								>{task.title}</Text>
-							</View>
+  return (
+	<TouchableHighlight onPress={() => {router.push({ pathname: `/edit-task/`, params: { taskId: task._id } })}}>
+		<View className={`relative flex border-[1px] rounded-md p-1`} style={{ borderColor: theme.colors.text }}>
+				<View className="w-64">
+					<View className="flex flex-row items-start">
+						<View className="flex justify-start h-full">
+							<BouncyCheckbox
+								size={24}
+								fillColor="purple"
+								unfillColor="#FFFFFF"
+								text="Custom Checkbox"
+								innerIconStyle={{ borderWidth: 2 }}
+								isChecked={task.completed}
+								onPress={handleChangeTaskStatus}
+								textComponent={<></>}
+								className="p-4"
+								/>
 						</View>
-						{task.isEstimated &&
-							<View className="absolute flex justify-center items-center right-2 top-0">
-								<Text
-									className={'text-xs font-bold'}
-									style={{ color: displayedDifficulty.color }}
-								>
-									{displayedDifficulty.text}
-									&nbsp;
-									{task.difficulty}
-								</Text>
-							</View>
-						}
+							<Text className={`p-3 pl-0 w-48 text-lg ${task.completed ? 'line-through text-gray-400' : 'no-underline'}`}
+								>{task.title}</Text>
 					</View>
-				</TouchableHighlight>
-			</Draggable>
+				</View>
+				{task.isEstimated &&
+					<View className="absolute flex justify-center items-center right-2 top-0">
+						<Text
+						className={'text-xs font-bold'}
+						style={{ color: displayedDifficulty.color }}
+						>
+							{displayedDifficulty.text}
+							&nbsp;
+							{task.difficulty}
+						</Text>
+					</View>
+				}
 		</View>
-	);
+	</TouchableHighlight>
+  );
 }
