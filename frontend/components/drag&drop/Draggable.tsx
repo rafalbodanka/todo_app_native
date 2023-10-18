@@ -1,14 +1,14 @@
 import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue } from "react-native-reanimated"
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from "react-native-gesture-handler"
-import { ICarouselInstance } from "react-native-reanimated-carousel"
 import { ReactNode, useEffect } from "react"
-import { Dimensions } from "react-native";
+import { Dimensions, ScrollView } from "react-native";
 
 type Props = {
-    children: ReactNode
-  }
+    children: ReactNode,
+    handleScroll: (x: number, y: number) => void
+    }
 
-  const Draggable = ({ children }: Props ) => {
+  const Draggable = ({ children, handleScroll }: Props) => {
 
 	const width = Dimensions.get('window').width;
     console.log(width)
@@ -32,8 +32,8 @@ type Props = {
 
             try {
                 if (isGestureActive.value && translateX.value > width / 2) {
-                // mouseDown()
-                  isGestureActive.value = false;
+                    handleScroll(600, 0); // Adjust the parameters as needed
+                    isGestureActive.value = false;
                 }
               } catch (error) {
                 console.error("Error in scrollTo:", error);

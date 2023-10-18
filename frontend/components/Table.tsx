@@ -16,23 +16,24 @@ import AddColumn from "./table/AddColumn";
 import { selectTables } from "../redux/tables";
 import AddTable from "./table/AddTable";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
-import Carousel, { CarouselRenderItem } from 'react-native-reanimated-carousel';
 import { Dimensions, TouchableOpacity } from "react-native";
 import { selectCurretColumnIndex, setCurrentColumnIndex } from "../redux/currentColumn";
 import { ColumnType } from "../types/Types";
-import type { ICarouselInstance } from 'react-native-reanimated-carousel'; 
 
 export default function Table() {
 	const width = Dimensions.get('window').width;
-
 	const currentTable = useAppSelector(selectCurrentTable)
 	const [isFetching, setIsFetching] = useState(true)
 	const theme = useTheme()
 	const tables = useAppSelector(selectTables)
 	useFetchTables(setIsFetching)
-	const carouselRef = useRef<ICarouselInstance>(null)
-	console.log(carouselRef.current?.getCurrentIndex())
 	const dispatch = useAppDispatch()
+	const scrollRef = useRef<ScrollView | null>(null);
+	
+	const handleScroll = (x: number, y: number) => {
+		console.log('elo')
+		scrollRef.current?.scrollTo({animated: true, x: x, y: y})
+	}
 
 	return (
 		<>
@@ -59,6 +60,7 @@ export default function Table() {
 					</Header>
 					{tables.length > 0 ?
 					<ScrollView
+						ref={scrollRef}
 						horizontal
 					>
 						<View className={`flex flex-col ${currentTable.columns.length > 0 && "pl-16"}`}>
@@ -67,7 +69,8 @@ export default function Table() {
 									return (
 										<ScrollView key={column._id} showsVerticalScrollIndicator={false}
 										>
-											<Column column={column}></Column>
+											<TouchableOpacity onPress={() => handleScroll(600, 0)}><Text>next</Text></TouchableOpacity>
+											<Column column={column} handleScroll={handleScroll}></Column>
 										</ScrollView>
 									)
 								})}

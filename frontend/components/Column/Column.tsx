@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, ForwardedRef } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { Text, View } from "../Themed";
 import Task from "../task/Task";
 import { ColumnType } from "../../types/Types";
@@ -16,9 +16,8 @@ import Colors, { green, red } from "../../constants/Colors";
 import ReactNativeModal from "react-native-modal";
 import { Button } from "@rneui/base";
 import DeleteColumn from "./DeleteColumn";
-import type { ICarouselInstance } from 'react-native-reanimated-carousel'; 
 
-const Column = ({ column }: { column: ColumnType }) => {
+const Column = ({ column, handleScroll }: { column: ColumnType; handleScroll: (x: number, y: number) => void }) => {
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const dispatch = useAppDispatch()
@@ -27,7 +26,7 @@ const Column = ({ column }: { column: ColumnType }) => {
   const toggleCompletedTaskVisibility = () => {
     dispatch(toggleCompletedTasksVisibility(column._id))
   }
-
+  console
   return (
     <TouchableWithoutFeedback className="pt-4 pb-8 h-full items-center" onLongPress={() => setIsDeleteModalVisible(true)}>
       <DeleteColumn
@@ -42,7 +41,10 @@ const Column = ({ column }: { column: ColumnType }) => {
           {column.pendingTasks.map((task) => {
             return (
               <View key={task._id} className="pt-4">
-                <Task task={task} column={column} taskArray="pendingTasks"></Task>
+                <Task
+                handleScroll={handleScroll}
+                task={task} column={column}
+                taskArray="pendingTasks"></Task>
               </View>
             )
           })}
@@ -67,6 +69,7 @@ const Column = ({ column }: { column: ColumnType }) => {
           {column.showCompletedTasks && column.completedTasks.map((task) => {
             return (
                 <Task
+                handleScroll={handleScroll}
                 key={task._id} 
                 task={task} column={column}
                 taskArray="completedTasks"></Task>
